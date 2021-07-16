@@ -1,0 +1,587 @@
+@extends('frontend.master')
+@section('title')
+    {!! strip_tags( $product->meta_title)!!}
+@endsection
+@section('desc')
+    {!!strip_tags($product->meta_descr)!!}
+@endsection
+@section('img')
+    {{ asset($product->image)}}
+@endsection
+@section('content')
+
+<link rel="stylesheet" href="{{ asset('frontend/css/productinfo.css')}}" />
+<link rel="stylesheet" href="{{ asset('frontend/jquery.exzoom.css')}}" />
+
+<style>
+  /* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #f70;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #60c3d3;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+#gallery_01 img{border:2px solid white;}
+ 
+ /*Change the colour*/
+ .active img{border:2px solid #333 !important;}
+
+
+ /* rating  */
+ .rating {
+	  float:left;
+  }
+  /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+	 follow these rules. Every browser that supports :checked also supports :not(), so
+	 it doesn’t make the test unnecessarily selective */
+  .rating:not(:checked) > input {
+	  position:absolute;
+	  top:-9999px;
+	  clip:rect(0,0,0,0);
+  }
+.col{
+	color:rgb(180, 179, 179)!important;
+
+  }
+  .rating:not(:checked) > label {
+	  float:right;
+	  width:1em;
+	  padding:0 .1em;
+	  overflow:hidden;
+	  white-space:nowrap;
+	  cursor:pointer;
+	  font-size:200%;
+	  line-height:1.2;
+	  color:rgb(175, 175, 175);
+	  text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+  }
+  
+  .rating:not(:checked) > label:before {
+	  content: '★';
+  }
+  
+  .rating > input:checked ~ label {
+	  color: #f70;
+	  text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+  }
+  .rtn{
+	float: left;
+	width: 100%;
+  }
+  .rating:not(:checked) > label:hover,
+  .rating:not(:checked) > label:hover ~ label {
+	  color: gold;
+	  text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+  }
+  
+  .rating > input:checked + label:hover,
+  .rating > input:checked + label:hover ~ label,
+  .rating > input:checked ~ label:hover,
+  .rating > input:checked ~ label:hover ~ label,
+  .rating > label:hover ~ input:checked ~ label {
+	  color: #ea0;
+	  text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+  }
+  
+  .rating > label:active {
+	  position:relative;
+	  top:2px;
+	  left:2px;
+  }
+  
+  .checked{
+	color: orange;
+  }
+  .at-share-btn-elements{
+	  margin-top:35px!important;
+  }
+</style>
+
+    <div class=" sv-product-info mt-5">
+
+      <div class="product-info-top bg-white px-3 py-4">
+      
+        <div class="d-flex sv-product-info-wrapper">
+          <!-- left secton -->
+          <div class="sv-product-info-left">
+            <div class="">
+
+         <div class="row">
+           <div class="col-md-8 offset-md-2">
+            <div class="exzoom" id="exzoom">
+              <!-- Images -->
+              <div class="exzoom_img_box">
+                <ul class='exzoom_img_ul'>
+                  @foreach ($color as $item)
+                  <li><img src="{{asset($item->image) }}" class="main_image img-fluid"/>
+                    <p>back view</p>
+                  </li>
+                  
+                  @endforeach
+             
+                </ul>
+              </div>
+              <!-- <a href="https://www.jqueryscript.net/tags.php?/Thumbnail/">Thumbnail</a> Nav-->
+              <div class="exzoom_nav"></div>
+              <!-- Nav Buttons -->
+              <p class="exzoom_btn">
+                  <a href="javascript:void(0);" class="exzoom_prev_btn"> < </a>
+                  <a href="javascript:void(0);" class="exzoom_next_btn"> > </a>
+              </p>
+            </div>
+           </div>
+          </div>
+           
+         </div>
+        </div>
+    
+     
+
+
+          <!-- right section -->
+          <div class="sv-product-info-right">
+            <div class="sv-product-info-title">
+              <h2>{{ $product->name }} </h2>
+            </div>
+            <form action="{{ route('cart.store') }}" method="POST">
+              @csrf
+              <input type="hidden" value="{{ $product->id }}" name="product_id">
+            {!! $product->short_desc !!}
+            <br>
+            <ul class="rating-stars my-2">
+              @php
+            $rev=DB::table('productreviews')->where('product_id',$product->id)->avg('rating');
+            $total=DB::table('productreviews')->where('product_id',$product->id)->get();
+        @endphp
+            <?php for($i=1;$i<=ceil($rev);$i++){ ?>
+              <span class="fa fa-star checked" ></span>
+              <?php  }?>
+    
+              <?php for($j=1;$j<=5-ceil($rev);$j++) {?>
+             <span class="far fa-star" style="color: #f70!important;"></span>
+              <?php  } ?>
+            </ul>
+            <small class="label-rating text-muted">{{count($total)}} reviews | <a href="#"data-toggle="modal" data-target="#reviewmodel">Give feedback</a></small>
+            <div class="sv-product-info-price">
+              @php
+                  $price=DB::table('productvariations')->where('product_id',$product->id)->first();
+              @endphp
+           
+              <h3>{{ __getPriceunit()}}<span class="Vprice">
+                @if($price)
+                  {{$price->price}}
+                    @else 
+                  {{$product->price}}
+                @endif
+                </span></h3>
+            
+              <p> <span class="text-dark">Category</span> : {{ $product->category }}</p>
+              <p> <span class="text-dark">Delivery Time</span> : {{ $product->delivery_time }}</p>
+
+
+            </div>
+            @if (count($color)>0)
+            <div class="sv-product-info-colors mt-4">
+
+              <div class="sv-product-info-colors-wrapper">
+                    @foreach ($color as $item)
+                    <label class="radio-container">
+                        <input type="radio" checked="checked" name="color" class="img" value="{{ $item->id }}" />
+                        <span class="checkmark checkmark-red photo" style="background: {{ $item->color }}"></span>
+                      </label>
+                    @endforeach
+                
+               
+                  
+              </div>
+            </div> 
+            @endif
+     {{-- @if (count($variation)>0) --}}
+     <div class="sv-product-info-storage mt-5">
+      <div class="sv-product-info-storage-wrapper buttongroup mt-2">
+        
+      @foreach ($variation as $item)
+  <span>
+
+    <input id="{{ $item->variation }}" type="radio" value="{{ $item->id }}" name="storage" class="variation "  @if ($loop->first)
+    checked="checked"
+    @endif /> 
+    <label for="{{ $item->variation }}" class="storage  ">    
+        {{ $item->variation }}
+    </label>
+  </span>
+        
+      @endforeach
+    </div>
+      
+    </div>
+     {{-- @endif --}}
+
+     <div class="qty mt-3">
+
+      <button onclick="increment()" class="incrementbtn px-4 py-1 text-white" style="background: #60c3d3;border-color:#60c3d3" type="button">+</button> 
+      <input id=demoInput type=number min="1" max="10" readonly value="1" class="value text-center  py-1" name="qty">
+
+      <button onclick="decrement()" class="decrementtbtn px-4 py-1  text-white" style="background: #60c3d3;border-color:#60c3d3;" type="button">-</button>
+    </div>
+           
+            <div class="sv-product-info-checkout">
+              <input type="submit" value="Add to Cart" >
+              <input type="submit" name="submit" value="Buy Now">
+            </div>
+    </form>
+    
+    @if (session()->has('vendorcoupon'))
+        <div class="text-success">Coupon Applied &nbsp;&nbsp; 
+          
+          {{-- <span><a href="{{ route('vendorcouponremove') }}" class="text-danger">Remove Coupon</a></span> --}}
+        
+        </div>
+        @else 
+        <form action="{{ route('vendorcoupon') }}" class="mt-4 coupon" method="POST">
+          @csrf
+          Have a promo code ?
+          <br>
+          <input type="hidden" name="product_id" value="{{ $product->id }}">
+          <input type="hidden" name="vendor_id" value="{{ $product->vendor_id }}">
+            <input type="text" name="coupon" required  class="" autocomplete="off">
+            <input type="submit" value="Apply">
+          </form>
+    @endif
+   
+    <div class="contact">
+      <a href="" class="badge bg-info text-white">Contact Seller</a>
+      <a href="" class="badge bg-info text-white">Report Product</a>
+      <a href="" class="badge bg-info text-white">Customize Product</a>
+    </div>
+  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+
+    <div class="container">
+
+      <!-- product info bottom -->
+      <div class="row mt-5">
+        <!-- left section -->
+        <div class="col-md-8  product_descr">
+          <!-- Tab links -->
+<div class="tab">
+  <button class="tablinks " onclick="openCity(event, 'London')" id="login">Description</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">Features</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Term & Conditions</button>
+</div>
+
+<!-- Tab content -->
+<div id="London" class="tabcontent">
+  <h3>Product Description</h3>
+  <div class="sv-product-info-desc">
+    {!! $product->descr !!}
+   </div>
+</div>
+
+<div id="Paris" class="tabcontent">
+  <h3>Features</h3>
+  <p>Paris is the capital of France.</p>
+</div>
+
+<div id="Tokyo" class="tabcontent">
+  <h3>Term & Conditions</h3>
+  <p>Tokyo is the capital of Japan.</p>
+</div>
+         
+        </div>
+        <!-- right section -->
+        <div class="col-md-4 product_rating" style="max-height: 800px!important;">
+          <div class="sv-product-info-bottom-right-title">
+            <h4>Product Review</h4>
+          <!-- Button trigger modal -->
+
+
+
+            <?php
+            $rev=DB::table('productreviews')->join('users','users.id','productreviews.user_id')->where('productreviews.product_id',$product->id)->select('productreviews.*','users.name','users.profile_photo_path')->paginate(4);
+                                ?>
+                                <div class="row">
+                                 
+                            <div class="col-md-12">
+                       
+                              
+          
+                              <a href="#" data-toggle="modal" data-target="#reviewmodel" class="review_model badge bg-info text-white mb-1 px-5 py-2">Write  Review</a> 
+                            </div>
+                                @foreach ($rev as $row)
+                                <div class="col-md-12">
+                                <p>
+                                <h4 class="text-dark d-flex align-items-center">
+                                  @if ($row->profile_photo_path)
+                                  <img src="{{asset($row->profile_photo_path)}}" alt="{{$row->profile_photo_path}}" width="40" class="rounded-circle">
+                                  @else
+                                  <img src="{{asset('frontend/download.webp')}}" alt="{{$row->profile_photo_path}}" width="40" class="rounded-circle">
+                                    
+                                  @endif
+                                  
+                                  
+                                  
+                                  &nbsp;&nbsp;{{ $row->name }}
+                                {{-- @if (Auth::check() && Auth::user()->id==$row->user_id) --}}
+                                <p style="margin-left: auto"><a href="" data-toggle="modal" data-target="#editreviewmodel" data-id="{{$row->id}}" class="editreview" style="font-size: 1rem;color:rgb(0, 68, 255);">
+                            Edit
+                                </a> | <a href="{{ route('product.rating.delete',['id'=>$row->id]) }}" style="font-size: 1rem;color:rgb(0, 68, 255);">Delete</a></p>
+                                {{-- @endif --}}
+                                </h4>
+                            
+                                <?php for($i=1;$i<=$row->rating;$i++){ ?>
+                                <span class="fa fa-star checked"></span>
+                                <?php  }?>
+                            
+                                <?php for($j=1;$j<=5-$row->rating;$j++) {?>
+                                 <span class="fa fa-star text-gray"></span>
+                                <?php  } ?>
+                                <p>
+                                  {{$row->feedback}}
+                                </p>
+                                <small>{{carbon\carbon::parse($row->updated_at)->diffForHumans()}}</small>
+                                </p>
+                                <hr style="margin-bottom: 0px">
+                                 </div>
+                                @endforeach
+
+<div class="col-md-4 offset-md-8">
+  <div class=" mt-3">
+    {{  $rev->links() }}
+  </div>
+</div>
+          </div>
+          
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+
+ {{-- product from same store  --}}
+<div class="container-fluid">
+
+ <section  class="padding-bottom-sm mt-5">
+  @php
+      $products=DB::table('products')->where('shop_id',$product->shop_id)->where('status',1)->limit(12)->get();
+  @endphp
+      <header class="section-heading heading-line">
+          <h4 class="title-section text-uppercase">More items from Same Store</h4>
+      </header>
+      
+      <div class="row row-sm">
+          @foreach ($products as $item)
+              
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+              <div class="card card-sm card-product-grid">
+                  <a href="{{ route('product',['id'=>$item->id,'name'=>$item->name]) }}" class="img-wrap"> <img src="{{ asset($item->image) }}" alt="{{ $item->name }}"> </a>
+                  <figcaption class="info-wrap d-flex justify-content-between">
+                      <a href="{{ route('product',['id'=>$item->id,'name'=>$item->name]) }}" class="title">{{ $item->name }}</a>
+                      <div class="price mt-1"><span id="price">{{ __getPriceunit()}}</span>{{$item->price_after_comission }}</div> <!-- price-wrap.// -->
+                  </figcaption>
+              </div>
+          </div> <!-- col.// -->
+          @endforeach
+       
+      </div> <!-- row.// -->
+      </section>
+
+    </div>
+    {{-- review model  --}}
+  <div class="modal fade" id="reviewmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content py-3 px-5">
+      <div class="modal-header">
+   
+      </div>
+       
+       
+      <form action=" {{route('product.rating.store')}}" method="POST">
+        @csrf
+        <input type="hidden" name="product_id" value="{{$product->id}}">
+        <p>Ratting</p>
+        <div class="rtn">
+        <fieldset class="rating">
+        <input type="radio" id="star5" name="rating" value="5" />
+        <label for="star5" title="Rocks!">5 stars</label>
+        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+        </fieldset>
+        </div>
+        
+        <p>Review</p>
+        <p><textarea class="form-control" name="review" required ></textarea></p>
+        
+        
+        <div class="modal-footer">
+        <input type="submit" name="savert" value="Feedback" class="btn btn-primary">
+        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+    
+      </div>
+    </div>
+    </div>
+    
+  
+  
+  
+  
+  {{-- review model  --}}
+  <div class="modal fade" id="editreviewmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content py-3 px-5">
+      <div class="modal-header">
+      
+        </div>
+       
+        
+        <form action=" {{route('product.rating.update')}}" method="POST">
+            @csrf
+            <input type="hidden" name="product_id" value="{{$product->id}}">
+            <input type="hidden" name="vid" value="" id="vid">
+  
+          <p>Review</p>
+          <p><input class="form-control" name="feedback" required id="text"></p>
+          
+            
+          <div class="modal-footer">
+            <input type="submit"  value="Feedback" class="btn btn-info btn-sm">
+            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+  
+      </div>
+    </div>
+    </div>
+  
+
+  @endsection
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.3.1min.js"></script>
+
+<script src="{{ asset('frontend/jquery.exzoom.js') }}"></script>
+<script>
+ $(function(){
+
+$("#exzoom").exzoom({
+  // options here
+});
+
+})
+
+</script>
+{{-- load image using ajax according to color --}}
+<script>
+	$('.photo').click(function(){
+	  
+	  let val=$(this).siblings('.img').val();
+	  $.ajax({
+			url:'{{ url('loadimage') }}/'+val,
+			type:'GET',
+			DataType:'Json',
+			beforeSend:function(){
+			  $('.loading').css('display','block')
+			},
+			success:function(data){
+        $('.main_image').attr('src','');
+
+			  $('.main_image').attr('src',data);
+        $(function(){
+
+$("#exzoom").exzoom({
+  // options here
+});
+
+})
+      },
+			complete:function(){
+			  $('.loading').css('display','none')
+			}
+	  })
+	})
+	</script>
+    <script>
+      $('.storage').click(function(){
+        let val=$(this).siblings('.variation').val();
+        $.ajax({
+          url:'{{ url('loadprice') }}/'+val,
+          type:'GET',
+          DataType:'Json',
+          beforeSend:function(){
+            $('.loading').css('display','block')
+          },
+          success:function(data){
+            $('.Vprice').html(data);
+  
+          },
+          complete:function(){
+            $('.loading').css('display','none')
+          }
+        })
+      })
+      </script>
+
+      <script>
+        function openCity(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+document.getElementById("login").click();
+
+      </script>
+
+@endpush

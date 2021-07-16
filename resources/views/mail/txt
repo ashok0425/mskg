@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   
+    <style>
+      
+        body{
+            padding:0;
+            margin:0;
+            box-sizing:border-box;
+        }
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 16px;
+            line-height: 24px;
+            color: #000;
+         padding-left:30px;
+         padding-right:30px;
+            background: #fff;
+
+        }
+        
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
+        
+        .invoice-box table td {
+            padding: 8px 0;
+            vertical-align: top;
+        }
+        .padding{
+            padding-left:500px;
+        }
+     
+        
+        .invoice-box table tr.top table td {
+            padding-bottom: 30px;
+        }
+        
+       
+        
+        .invoice-box table tr.information table td {
+            padding-bottom: 70px;
+        }
+    
+        .invoice-box table tr.heading td {
+            border-bottom: 2px solid #005aa6;
+            font-weight: bold;
+          
+padding-top: 1rem;
+padding-bottom: 1rem;
+
+
+        }
+        
+        .invoice-box table tr.details td {
+            border-bottom: 2px solid gray;
+
+            padding-bottom: 20px;
+        }
+        .invoice-box table tr.details td:last-child {
+           
+
+            padding-bottom: 20px;
+        }
+        
+      
+        
+        .invoice-box table tr.total td {
+            border-top: 2px solid #005aa6;
+            border-bottom: 2px solid #005aa6;
+           
+        }
+       
+        @media only screen and (max-width: 600px) {
+            .padding{
+            padding-left:0px;
+        }
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+         
+        }
+        /** RTL **/
+        
+        .rtl {
+            direction: rtl;
+            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+        
+        .rtl table {
+            text-align: right;
+        }
+        
+        .rtl table tr td:nth-child(2) {
+            text-align: left;
+        }
+        .add{
+            font-size: 20.5px;
+            margin: 0!important; 
+            padding-left: -60px!important;
+            line-height: 1.3;
+            font-weight:0!important;
+        }
+        
+        .bill h3,.invoice h3{
+            color:#005aa6;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+       
+        
+.border_bottom{
+    width:120%;
+    position:fixed;
+    bottom:-50px;
+    height:70px;
+    background:#005aa6;
+    padding:0;
+    left:-100px;
+    margin:0;
+   
+}
+.links{
+    padding:20px 100px;
+}
+.links a{
+   
+   margin-left:20px;
+    margin-right:20px;
+    color:#fff;
+    text-decoration:none;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+     
+
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="4">
+                    <table>
+                        <tr>
+                            <td class="title ">
+                              <a href="https://oceandrycleaners.com.au/"class='add' >
+                                    <img src="{{ asset('blue.png') }}" style="width: 100%; max-width: 400px" />
+                              </a>
+                          <div class="text">
+                              
+                                
+                            <div class='add'>
+                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;44/115 Robinson road East
+
+                              </div>
+                              <div class='add'>
+                              &nbsp;  &nbsp; &nbsp;    &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; Geebung Qld 4034, Brisbane
+
+                              </div>
+                          </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="information">
+                <td colspan="4">
+                    <table>
+                        <tr>
+                           <td>
+                               <div class="invoice">
+                                <h3>Invoice</h3> 
+                      
+                                 Invoice #: OC{{1000+$order_id}}<br /> 
+                                 
+                               {{\Carbon\Carbon::parse($order_date)->format('d- M-Y')}}
+                               <br>
+                               Payment method:{{$payment_type}}
+                               </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                             <td>
+                            <div class="bill">
+                                <h3>Bill to</h3>
+                            {{$ship_name}}
+                            <br>
+                               {{$ship_email}}
+                                <br>
+                                {{$ship_phone}}
+                                   <br>
+                                {{$ship_address}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+   
+            <tr class="heading" >
+                <td >&nbsp;&nbsp; &nbsp; &nbsp; Item</td>
+                  <td > Quantity</td>
+                    <td >Unit Price</td>
+                      <td >Total Price</td>
+
+               
+            </tr>
+@php $grandtotal=0; @endphp
+@foreach ($cart as $item)
+@php 
+$grandtotal +=$item->totalprice;
+@endphp
+            <tr class="item">
+                <td> &nbsp;&nbsp; &nbsp;  {{$item->product_name}}
+                 @if ($item->package !=null)
+ @php
+
+		$pack=DB::table('order_package')->join('products','products.id','order_package.product_id')->select('order_package.*','products.product_name','products.image_one')->where('cart_id',$item->id)->where('order_id',$order_id)->get();
+
+ @endphp
+ <ul>
+     
+ 
+	@foreach ($pack as $abc)
+	
+		<li>
+		   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  {{$abc->product_name}}
+		</li>
+	@endforeach
+	</ul>
+	@endif
+                
+                </td>
+
+                <td> &nbsp;&nbsp; &nbsp;  {{$item->qty}}</td>
+                 <td> &nbsp;&nbsp; &nbsp;  ${{number_format((float)$item->price,2)}}</td>
+                  <td> &nbsp;&nbsp; &nbsp;   ${{number_format((float)$item->totalprice,2)}}</td>
+                  
+            </tr>
+           @endforeach
+        
+            <tr class="total">
+                
+                <td colspan='4'>
+                    
+                <div class="padding">
+                Sub-Total : ${{ number_format((float)$grandtotal,2)}}
+                
+                @if($coupon!=null)
+                <br/>
+                Discount : {{$coupon_value}}%
+                @endif
+                  <br/>Shipping Fee : ${{number_format((float)$shipping,2)}}<br/>
+                               Total:  ${{number_format((float)$total,2)}}
+                </div>
+                    </td>    
+       
+            </tr>
+            <tr>
+                <td colspan='4' class="bill">
+                    <h3>Special Message:
+</h3>
+               {{$msg}} 
+                </td>
+              
+            </tr>
+             </div>
+        </table>
+       
+    </div>
+    <div class='border_bottom '>
+ <div class='links'>
+            <a href='mailto:admin@oceandrycleaners.com.au'>admin@oceandrycleaners.com.au</a> <a herf='oceandrycleaners.com.au'>www.oceandrycleaners.com.au</a> <a href='tel:+0422307766'>+0422307766</a>
+ </div>
+    </div>
+</body>
+
+</html>

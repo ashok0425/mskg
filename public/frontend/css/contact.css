@@ -1,0 +1,132 @@
+
+
+/* contact section */
+.sv-contact {
+  margin: 35px 0;
+}
+
+.sv-contact-title {
+  text-align: center;
+}
+
+.sv-contact-title h3 {
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* new section */
+/* contact left section */
+.sv-contact-left {
+  padding: 20px;
+  border-radius: 20px;
+  color: var(--brand-white);
+  background: var(--brand-dark-blue);
+}
+
+.sv-contat-left-title h6 {
+  margin-top: 10px;
+  font-weight: 400;
+}
+
+.sv-contact-left-desc {
+  position: relative;
+}
+
+.sv-contact-left-blue-circle {
+  position: absolute;
+  bottom: -100px;
+  right: -100px;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-color: #fa949d;
+}
+
+.sv-contact-left-desc-box {
+  padding: 15px 0;
+}
+
+.sv-contact-left-desc-text {
+  margin-left: 10px;
+}
+
+.sv-contact-left-desc-text h6 {
+  font-weight: 400;
+}
+
+.sv-contact-left-desc-text p {
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.sv-contact-social-link-wrapper {
+  margin: 0 -10px;
+}
+
+.sv-contact-social-link-wrapper .fab {
+  margin: 0 10px;
+  color: var(--white);
+}
+
+/* new seciton */
+/* right section */
+.sv-contact-right {
+  margin-left: 25px;
+}
+
+.sv-contact-group {
+  padding: 25px 15px;
+}
+
+.sv-contact-group-title {
+  font-weight: 700;
+}
+
+.sv-contact-group input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--brand-black);
+  outline: none;
+}
+
+.sv-contact-group textarea {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 100px;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #000;
+}
+
+.sv-contact-group button {
+  border: none;
+  color: #fff;
+  padding: 8px 45px;
+  border-radius: 25px;
+  background-color: var(--brand-one);
+}
+/* new section */
+/* visit store section */
+.sv-visit-store {
+  margin-top: 25px;
+}
+
+.sv-visti-title {
+  padding: 20px 0;
+  text-align: center;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+}
+
+/* mobile screen */
+@media screen and (max-width: 768px) {
+  /* contact wrapper */
+  .sv-contact-wrapper {
+    display: block !important;
+  }
+}
