@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="{{ $setting->descr }}">
+	<meta name="description" content="Total Physical Fitness Centre">
 	<meta name="author" content="{{ $setting->url }}">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -15,7 +15,7 @@
 
 <link rel="icon" href="{{asset("fev.png")}}" type="image/icon type">
 
-	<title>{{ $setting->title }}</title>
+<title>Total Physical Fitness Centre</title>
 
 
 

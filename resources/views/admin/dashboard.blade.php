@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('main-content')
+
 <style>
     .rotate{
         transform: rotateY(180deg)!important;
@@ -8,6 +8,8 @@
 @php
     define('PAGE','dashboard')
 @endphp
+@section('main-content')
+    
 <div class="container-fluid p-0">
 
 				
@@ -343,5 +345,6 @@
     </div>
 
 </div>
-<x-weekchart />
+{{-- <x-weekchart /> --}}
+
 @endsection

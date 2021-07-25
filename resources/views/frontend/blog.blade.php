@@ -1,128 +1,144 @@
 @extends('frontend.master')
-
-<style>
-  
-.blog-posts{
-  width: min(1200px, 100%);
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  cursor: pointer;
-}
-
-.post{
-  width: calc(33% - 10px);
-  overflow: hidden;
-}
-
-.post-img{
-  width: 100%;
-  border-radius: 6px;
-  transition: .3s linear;
-}
-
-.post-content{
-  background-color: #ffffffdd;
-  margin: 0 20px;
-  padding: 30px;
-  border-radius: 6px;
-  transform: translateY(-60px);
-  transition: .3s linear;
-  box-shadow: 0px 2px 5px gray;
-}
-
-.post-content h3{
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.date{
-  font-size: 15px;
-  font-style: italic;
-  color: #e77f67;
-}
-.blog_category h2{
-    font-size: 1.2rem;
-}
-.post:hover .post-img{
-  transform: translateY(20px);
-}
-
-.post:hover .post-content{
-  transform: translateY(-80px);
-}
-
-@media screen and (max-width: 1200px){
-  .blog-posts{
-    justify-content: center;
-  }
-  .post{
-    width: min(600px, 100%);
-  }
-}
-</style>
-@section('header')
-<section class="section-pagetop bg-gray ">
-  <div class="container">
-      <h2 class="title-page">Blog</h2>
-  </div> <!-- container //  -->
-  </section>
-@endsection
 @section('content')
-<div class="container my-5">
-    @php
-    $category=DB::table('blogcategories')->where('status',1)->get();
-@endphp
-@foreach ($category as $item)
-    
+<div class="c-layout-page">
+    <!-- BEGIN: PAGE CONTENT -->
+    <!-- BEGIN: LAYOUT/SLIDERS/REVO-SLIDER-9 -->
+    <!--Main Slider-->
 
-@php
-    
-    $blog=DB::table('blogs')->where('category_id',$item->id)->orderBy('id','desc')->paginate(3);
 
-@endphp
-@if (count($blog)>0)
-    
-<div class="blog_category my-4">
-    <h2>{{ $item->category}}</h2>
-</div>
-<div class="blog-posts">
-  
-    @foreach ($blog as $items)
-        
-    <div class="post">
-        <a href="{{ route('blog.single',['id'=>$items->id]) }}">
-      <img src="{{ asset($items->image) }}" alt="{{ $items->title }}" class="post-img">
-      <div class="post-content">
-        <h3>{{ $items->title }}</h3>
-        <span class="date">{{ carbon\carbon::parse($items->created_at)->format('D').'-'.carbon\carbon::parse($items->created_at)->format('m') .'-'.carbon\carbon::parse($items->created_at)->year }}</span>
-        <br>
-        <span>{{$items->author}}</span>
-      </div>
-    </a>
+    <div class="c-layout-breadcrumbs-1 c-bgimage" style="background-image: url({{asset('frontend/img/content/backgrounds/bg-10.jpg')}}); background-repeat: no-repeat; background-size: cover "">
+        <div class="container">
+            <div class="c-content-title-1 text-center">
+                <h3>Our Blogs</h3>
+                <h5 class="text-white"><a href ="index.php">Home /</a> Blogs</h5>
+            </div>
+        </div>
     </div>
-    
+    <!-- END: LAYOUT TITLE / BREADCRUMBS -->
+    <!-- BEGIN: Bring Your Performance -->
 
-    @endforeach
-</div>
 
-   <div class="row">
-       <div class="col-md-4 offset-md-4">
-        <center>
-            {{ $blog->links() }}
-        </center>
-       </div>
-   </div>
-@endif
+    <div class="c-content-box c-size-md c-bg-white ltst-warp-hm">
+      <div class="container">
 
-    @endforeach
 
-  
-    
+
+        <div class="row">
+          <div class="col-sm-6 wow animated htwoBlogLeft clearfix fadeInLeft">
+            <div class="col-sm-6 col-xs-6"><img alt="" class="img-responsive" src="{{asset('frontend/img/ltst-img1.jpg')}}">
+            </div>
+
+
+            <div class="col-sm-6 col-xs-6">
+              <h6 class="lts-abslt-tils">Health / Fitness Tips</h6>
+              <!-- Begin: Title 1 component -->
+
+
+              <div class="c-content-title-1">
+                <h4 class="headingWline">Tips For An Better Workout</h4>
+            </div>
+            <!-- End-->
+
+
+            <p>Aliquam aliquet lectus non laoreet mo lestie. Sed vel justo a risus rhoncus aliquet sed.</p>
+
+            <div class="row">
+                <ul class="c-content-list-1">
+                            <li><a href="{{route('blog.detail',['id'=>1])}}">Read More</a></li>
+
+              </ul>
+          </div>
+          
+      </div>
   </div>
 
+
+  <div class="col-sm-6 wow animated htwoBlogLeft clearfix fadeInRight">
+    <div class="col-sm-6 col-xs-6"><img alt="" class="img-responsive" src="{{asset('frontend/img/ltst-img2.jpg')}}">
+    </div>
+
+
+    <div class="col-sm-6 col-xs-6">
+      <h6 class="lts-abslt-tils">Health / Fitness Tips</h6>
+      <!-- Begin: Title 1 component -->
+
+
+      <div class="c-content-title-1">
+        <h4 class="headingWline">Tips For An Better Workout</h4>
+    </div>
+    <!-- End-->
+
+
+    <p>Aliquam aliquet lectus non laoreet mo lestie. Sed vel justo a risus rhoncus aliquet sed.</p>
+
+
+    <div class="row">
+        <ul class="c-content-list-1">
+                    <li><a href="{{route('blog.detail',['id'=>1])}}">Read More</a></li>
+
+      </ul>
+  </div>
+</div>
+</div>
+<div class="col-sm-6 wow animated htwoBlogLeft clearfix fadeInLeft">
+    <div class="col-sm-6 col-xs-6"><img alt="" class="img-responsive" src="{{asset('frontend/img/ltst-img1.jpg')}}">
+    </div>
+
+
+    <div class="col-sm-6 col-xs-6">
+      <h6 class="lts-abslt-tils">Health / Fitness Tips</h6>
+      <!-- Begin: Title 1 component -->
+
+
+      <div class="c-content-title-1">
+        <h4 class="headingWline">Tips For An Better Workout</h4>
+    </div>
+    <!-- End-->
+
+
+    <p>Aliquam aliquet lectus non laoreet mo lestie. Sed vel justo a risus rhoncus aliquet sed.</p>
+
+    <div class="row">
+        <ul class="c-content-list-1">
+                    <li><a href="{{route('blog.detail',['id'=>1])}}">Read More</a></li>
+
+      </ul>
+  </div>
+  
+</div>
+</div>
+
+
+<div class="col-sm-6 wow animated htwoBlogLeft clearfix fadeInRight">
+    <div class="col-sm-6 col-xs-6"><img alt="" class="img-responsive" src="{{asset('frontend/img/ltst-img2.jpg')}}">
+    </div>
+
+
+    <div class="col-sm-6 col-xs-6">
+      <h6 class="lts-abslt-tils">Health / Fitness Tips</h6>
+      <!-- Begin: Title 1 component -->
+
+
+      <div class="c-content-title-1">
+        <h4 class="headingWline">Tips For An Better Workout</h4>
+    </div>
+    <!-- End-->
+
+
+    <p>Aliquam aliquet lectus non laoreet mo lestie. Sed vel justo a risus rhoncus aliquet sed.</p>
+
+
+    <div class="row">
+        <ul class="c-content-list-1">
+                    <li><a href="{{route('blog.detail',['id'=>1])}}">Read More</a></li>
+
+      </ul>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
 @endsection
-
-
-

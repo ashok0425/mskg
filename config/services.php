@@ -39,4 +39,5 @@ return [
         'client_secret' => '5500ee18de1f002c266cec0f73cb0a6c',
         'redirect' => 'https://krafftbox.com/auth/facebook/callback',
     ],
+   
 ];

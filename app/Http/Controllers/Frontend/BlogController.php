@@ -15,15 +15,15 @@ use Session;
 class BlogController  extends Controller
 {
 
-    public function index($id,$name){
+    public function index(){
   
-          $blog = Blog::where('category_id',$id)->get();
+          $blog = Blog::where('category_id',1)->get();
         return view('frontend.blog',compact('blog'));
       }
 
       public function single($id){
         $blog =Blog::find($id) ;
-      return view('frontend.singleblog',compact('blog'));
+      return view('frontend.blogdetail',compact('blog'));
     }
 
     public function faq(){

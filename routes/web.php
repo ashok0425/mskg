@@ -126,8 +126,8 @@ Route::get('faq','Frontend\BlogController@faq')->name('faq');
 
 
 // blog
-Route::get('blog/{id}/{name}','Frontend\BlogController@index')->name('blog');
-Route::get('blogdetail/{id}/single','Frontend\BlogController@single')->name('blog.single');
+Route::get('blog','Frontend\BlogController@index')->name('blog');
+Route::get('blogdetail/{id}','Frontend\BlogController@single')->name('blog.detail');
 
 // subscriber 
 Route::post('subscriber/store','Frontend\ContactController@subscriber')->name('subscriber');
@@ -151,15 +151,26 @@ Route::get('shop/remove/favourite/{id}','Frontend\ShopController@remove')->name(
 
 
 // pages 
-Route::get('/about-us', function () {
+Route::get('/about', function () {
     return view('frontend.about');
 })->name('about');
+
+Route::get('/gallery', function () {
+    return view('frontend.gallery');
+})->name('gallery');
+
+Route::get('/form', function () {
+    return view('frontend.form');
+})->name('form');
+
 Route::get('/term-condition', function () {
     return view('frontend.term');
 })->name('term');
-Route::get('/seller/handbook', function () {
+
+Route::get('/price', function () {
     return view('frontend.price');
 })->name('price');
+
 Route::get('/privacy-policy', function () {
     return view('frontend.privacy');
 })->name('privacy');
