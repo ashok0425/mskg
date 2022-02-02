@@ -20,15 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('Isvendor')->nullable();
-            $table->string('company_name')->nullable();
-            $table->string('company_pan')->nullable();
-            $table->string('company_address')->nullable();
-            $table->string('company_state')->nullable();
-            $table->integer('membership')->nullable();
-            $table->string('google_id')->nullable();
-            $table->string('facebook_id')->nullable();
-
+      
             $table->integer('status')->default(1);
             
             $table->rememberToken();

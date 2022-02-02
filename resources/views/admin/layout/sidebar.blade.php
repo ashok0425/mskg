@@ -1,38 +1,63 @@
-<nav id="sidebar" class="sidebar" style="overflow-y: visible!important">
-    <div class="sidebar-content js-simplebar">
-        @php
-            $logo=DB::table('websites')->value('image');
-        @endphp
-        <a class="sidebar-brand" href="{{ route('admin.dashboard') }}">
-  <span class="align-middle"><img src="{{asset('frontend/img/tf-logo.png')}}" class="img-fluid main-logo" width="70"></span>
-</a>
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <ul class="sidebar-nav">
-            <li class="sidebar-header">
-                Pages
-            </li>
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ __setLink('admin/dashboard')}}">
+        <div class="sidebar-brand-icon rotate-n-15">
+        
+        </div>
+        <div class="sidebar-brand-text mx-3"><strong>FATFAT CAFE</strong></div>
+    </a>
 
-            <li class="sidebar-item <?php  echo PAGE=='dashboard'?'active':'' ?>">
-                <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
-      <i class="fas fa-wallet"></i><span class="align-middle">Dashboard</span>
-    </a>
-            </li>
-          
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
 
-            <li class="sidebar-item <?php  echo PAGE=='profile'?'active':'' ?>">
-                <a class="sidebar-link" href="{{route('admin.profile')}}">
-      <i class="fas fa-user"></i><span class="align-middle">Profile</span>
-    </a>
-            </li>
-            
-          
-           
-            
-            <li class="sidebar-item <?php  echo PAGE=='contact'?'active':'' ?>">
-                <a class="sidebar-link" >
-      <i class="fas fa-envelope"></i> <span class="align-middle">Package</span>
-    </a>
-            </li>
-        </ul>
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item {{Request::segment(2)=='dashboard'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.carts.create')}}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <!-- <hr class="sidebar-divider"> -->
+
+    <!-- Heading -->
+    <!-- <div class="sidebar-heading">
+        Dashboard
+    </div> -->
+
+    <li class="nav-item {{Request::segment(2)=='menu'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.menus.index')}}">
+        <i class="fas fa-folder-minus"></i>
+        <span>Menu</span></a>
+    </li>
+    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.orders.today')}}">
+        <i class="fas fa-pager"></i>
+        <span>Today SELL</span></a>
+    </li>
+    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.orders.index')}}">
+        <i class="fas fa-copy"></i>
+        <span>ALL Sell & Report</span></a>
+    </li>
+    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.orders.chart')}}">
+        <i class="fas fa-chart-bar"></i>
+        <span>Report in chart</span></a>
+    </li>
+
+    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.profile')}}">
+        <i class="fas fa-user"></i>
+        <span>Profile</span></a>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
-</nav>
+
+    </ul>

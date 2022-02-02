@@ -17,27 +17,27 @@ class AuthController extends Controller
 
 
     public function show(){
+       
         return view('admin.dashboard');
     }
 
     public function profile(){
-        return view('admin.profile');
+        return view('admin.profile.profile');
     }
 
     public function store(Request $request){
-   
         $request->validate([
             'email'=>'required|email',
             'password'=>'required'
         ]);
-       if(!Auth::guard('admin')->attempt($request->only('email','password'),$request->filled('remember'))){
+       if(!Auth::guard('admin')->attempt($request->only('email','password'))){
       
            $notification=array(
               'messege'=>'Invalid username or password',
                'alert-type'=>'error'
            );
          
-         return redirect('/admin/login')->with($notification);
+         return redirect()->route('admin.login')->with($notification);
        }
           return redirect()->route('admin.dashboard');
     }
@@ -53,9 +53,8 @@ try {
     
     
     $file=$request->file('file');
-   
     if($file){
-        File::delete(public_path($admin->profile_photo_path));
+        File::delete($admin->profile_photo_path);
         $fname=rand().'admin.'.$file->getClientOriginalExtension();
         $admin->profile_photo_path='upload/admin/'.$fname;
         $path=$file->move(public_path().'/upload/admin/',$fname);
@@ -90,16 +89,23 @@ try {
 
 }
 }
-function changePassword(Request $request){
+
+
+function password (){
+return view('admin.profile.password');
+}
+
+
+function password_update(Request $request){
     $request->validate([
+        'currentpassword'=>'required',
         'newpassword'=>'required|min:8|max:16',
-        'confirmpassword'=>'required|min:8|max:16',
+        'confirmpassword'=>'required|same:newpassword',
 
     ]);
     try {
 
         if(Hash::check($request->currentpassword, __getAdmin()->password)){
-            if($request->newpassword===$request->confirmpassword){
                 $admin=Admin::find( __getAdmin()->id);
                 $admin->password=Hash::make($request->newpassword);
                 
@@ -111,16 +117,9 @@ $admin->save();
         'messege'=>'Password updated please login again !',
          
      );
-     return redirect()->route('admin.logins')->with($notification);
+     return redirect()->route('admin.login')->with($notification);
 
-            }else{
-                $notification=array(
-                    'alert-type'=>'error',
-                    'messege'=>'Password not match',
-                     
-                 );
-                 return redirect()->back()->with($notification);
-            }
+          
               }else{
                 $notification=array(
                     'alert-type'=>'error',
@@ -149,7 +148,7 @@ $admin->save();
              );
             Auth::logout();
          session()->flush();
-            return redirect()->route('admin.logins')->with($notification);
+            return redirect()->route('admin.login')->with($notification);
         } catch (\Throwable $th) {
             $notification=array(
                 'alert-type'=>'info',
@@ -162,9 +161,6 @@ $admin->save();
     
     }
 
-    public function userList(){
-        $user=User::all();
-        return view('backend.user.list',compact('user'));
-    }
+ 
 
 }

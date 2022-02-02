@@ -1,298 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, init		ial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-	{{-- toastr  --}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FATAFAT CAFE</title>
+	   {{-- toastr --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-	<style>
-		@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,300,200,700");
-
-body {
-	margin: 0;
-	background-color: white;
-	font-family: Poppins, "Helvetica Neue", sans-serif;
-}
-
-.error-message {
-	color: #ff2222;
-}
-
-.bg {
-	background-image: linear-gradient(to right bottom, #9a9a9a, #848484, #6f6f6f, #5a5a5a, #464646, #3b3b3b, #303030, #252525, #1f1f1f, #191919, #141414, #0c0c0c);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-}
-
-.columns {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
-	max-height: 100vh;
-	background-image: url("https://res.cloudinary.com/www-santhoshthomas-xyz/image/upload/v1620796347/portfolio/bg8_ub3ck3.png");
-	background-size: contain;
-	background-repeat: no-repeat;
-	animation-name: MOVE-BG;
-	animation-duration: 2s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-	animation-fill-mode: forwards;
-	animation-direction: alternate;
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,900|Poppins:400,500');
+	* {
+	  margin: 0;
+	  padding: 0;
+	  text-decoration: none;
+	  box-sizing: border-box;
+	}
+	body {
+	  margin: 0;
+	  padding: 0;
+	  background: #f6f6f6;
+	  font-family: 'Poppins', sans-serif;
+	  overflow-x: hidden;
+	  height: 100vh;
+	  margin: auto;
+	  display: flex;
 	}
 
-	to {
-		opacity: 1;
-	}
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
+	img {
+		max-width: 100%;
 	}
 
-	50% {
-		background-position: 100% 50%;
+	.app {
+	  background-color: #fff;
+	  width: 330px;
+	  height: 570px;
+	  margin: 2em auto;
+	  border-radius: 5px;
+	  padding: 1em;
+	  position: relative;
+	  overflow: hidden;
+	  box-shadow: 0 6px 31px -2px rgba(0, 0, 0, .3);
 	}
 
-	100% {
-		background-position: 0% 50%;
-	}
-}
-
-@keyframes MOVE-BG {
-	from {
-		background-size: 80%;
+	a {
+		text-decoration: none;
+		color: #257aa6;
 	}
 
-	to {
-		background-size: 84%;
+	p {
+		font-size: 13px;
+		color: #333;
+		line-height: 2;
 	}
-}
+		.light {
+			text-align: right;
+			color: #fff;
+		}
+			.light a {
+				color: #fff;
+			}
 
-@keyframes MOVE-BG-MOBILE {
-	from {
-		background-size: 90%;
+	.bg {
+		width: 400px;
+		height: 550px;
+		background: #257aa6;
+		position: absolute;
+		top: -5em;
+		left: 0;
+		right: 0;
+		margin: auto;
+		background-image: url("background.jpg");
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		clip-path: ellipse(69% 46% at 48% 46%);
 	}
 
-	to {
-		background-size: 110%;
+	form {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		text-align: center;
+		padding: 2em;
 	}
-}
 
-.login-box {
-	animation: fadeIn 1s;
-	z-index: 10;
-	border-radius: 5px;
-	position: relative;
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	min-width: 400px;
-	min-height: 200px;
-	padding: 4rem 3rem;
-	background-color: white;
-}
+	header {
+	    width: 220px;
+	    height: 220px;
+	    margin: 1em auto;
+	  }
 
-.login-box a {
-	text-decoration: none;
-}
-
-.login-box .login {
-	display: none;
-}
-
-.login-box .signin {
-	animation: fadeIn 0.8s;
-}
-
-.login-box .signup {
-	animation: fadeIn 0.8s;
-}
-
-.login-box .action p {
-	display: inline;
-}
-
-.login-box .action .signup {
-	float: right;
-	font-weight: 700;
-}
-
-.login-box .input-field {
-	width: 75%;
-	position: relative;
-}
-
-.login-box .input-field i {
-	position: relative;
-	position: absolute;
-	top: 10px;
-	left: 50px;
-}
-
-.login-box .input-field #password {
-	background: url(https://res.cloudinary.com/www-santhoshthomas-xyz/image/upload/v1620796331/portfolio/lock_dnkpk8.png) no-repeat 5%;
-	background-size: 20px;
-	z-index: 50;
-}
-
-.login-box .input-field #email {
-	background: url(https://res.cloudinary.com/www-santhoshthomas-xyz/image/upload/v1620796341/portfolio/name_1_rgo5hw.png) no-repeat 5%;
-	background-size: 20px;
-	z-index: 50;
-}
-
-.login-box .input-field #tel {
-	background: url("../../../assets/telephone.png") no-repeat 5%;
-	background-size: 20px;
-	z-index: 50;
-}
-
-.login-box .input-field input {
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	width: 100%;
-	display: block;
-	padding: 15px 35px;
-	padding-left: 55px;
-	margin: 26px 0;
-	border: none;
-	border-left: 4px solid #0e1776;
-	border-radius: 4px;
-}
-
-.login-box-button {
-	position: relative;
-	margin-top: 2rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.login-box-button button {
-	padding: 0.8rem 2rem;
-	background: #0e1776;
-	color: white;
-	font-weight: 800;
-	border: none;
-	transition: all 1s ease-in;
-	background-position: 0;
-}
-
-.login-box-button button:active {
-	background-image: linear-gradient(to right top, #0e1776, #091b97, #031db9, #011edc, #081dff);
-	background-position: 400%;
-	transform: scale(1.1);
-}
-
-.login-box .topline {
-	display: inline-block;
-	position: relative;
-	position: relative;
-}
-
-.login-box .topline:after {
-	content: "";
-	position: absolute;
-	width: 40%;
-	transform: scaleX(1);
-	height: 5px;
-	top: -5px;
-	left: 0;
-	background-color: #0e1776;
-}
-
-@media screen and (max-width: 776px) {
-	.login-box {
-		padding: 4rem 2rem !important;
-		right: unset !important;
-		width: 50px !important;
-		max-width: 100px;
+	form input {
+	    width: 100%;
+	    padding: 13px 15px;
+	    margin: 0.7em auto;
+	    border-radius: 100px;
+	    border: none;
+	    background: rgb(255,255,255,0.3);
+	    font-family: 'Poppins', sans-serif;
+	    outline: none;
+	    color: #fff;
 	}
-}
-.alert-danger{
-	color: red;
-}
-	</style>
+	input::placeholder {
+	    color: #fff;
+	    font-size: 13px;
+	}
+
+	.inputs {
+		margin-top: -4em;
+	}
+
+	footer {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 2em;
+		text-align: center;
+	}
+
+	button {
+		width: 100%;
+	    padding: 13px 15px;
+	    border-radius: 100px;
+	    border: none;
+	    background: #257aa6;
+	    font-family: 'Poppins', sans-serif;
+	    outline: none;
+	    color: #fff;
+	}
+	
+	@media screen and (max-width: 640px) {
+			.app {
+				width: 100%;
+				height: 100vh;
+				border-radius: 0;
+			}
+
+			.bg {
+				top: -7em;
+				width: 450px;
+				height: 95vh;
+			}
+			header {
+				width: 90%;
+				height: 250px;
+			}
+			.inputs {
+				margin: 0;
+			}
+			input, button {
+				padding: 18px 15px;
+			}
+		}
+    </style>
 </head>
 <body>
+    <div class="app">
 
-	<div class="bg">
-	
-	
-		<div class="columns ">
-	  
-		  <div class="login-box">
-			@if ($errors->any())
-			<div class="alert alert-danger">
-				<ul>
-					@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
-					@endforeach
-				</ul>
+		<div class="bg"></div>
+
+		<form action="{{ route('admin.login') }}" method="POST">
+			<x-errormsg/>
+			@csrf
+			<header>
+				<img src="https://assets.codepen.io/3931482/internal/avatars/users/default.png?format=auto&height=80&version=1592223909&width=80">
+			</header>
+
+			<div class="inputs">
+				<input type="email" name="email" placeholder="Email"  required>
+				<input type="password" name="password" placeholder="password" required>
+
+				{{-- <p class="light"><a href="#">Forgot password?</a></p> --}}
 			</div>
-		@endif
-			<form action="{{route('admin.login')}}" method="POST">
-				@csrf
-			  <div class="signin" [hidden]="login">
-				<h1 class="topline">Admin Login</h1>
-				<br />
-				<div class="input-field">
-				  <input id="email" type="" name="email" formControlName="email" placeholder="Input your Email" />
-			
-				</div>
-	  
-				<div class="input-field">
-				  <input id="password" type="password" name="password" formControlName="password" placeholder="Password" />
-	  
-				</div>
-	  
-				
-	  
-				<div class="login-box-button">
-				  <button type="submit">
-					<i class="fas fa-sign-in-alt"></i>
-					LOG IN
-				  </button>
-				</div>
-			  </div>
-			</form>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
 
-		  </div>
-		  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		  	{{-- toastr  --}}
-			  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-		{{-- toastr  --}}
+			<footer >
+				<button type="submit">Continue</button>
+			</footer>
+		</form>
+
+		
+
+
+	</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+	{{-- toastr  --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <script>
-
-    @if(Session::has('messege'))//toatser
-
-      var type="{{Session::get('alert-type','info')}}"
-      switch(type){
-          case 'info':
-               toastr.info("{{ Session::get('messege') }}");
-               break;
-          case 'success':
-              toastr.success("{{ Session::get('messege') }}");
-              break;
-          case 'warning':
-             toastr.warning("{{ Session::get('messege') }}");
-              break;
-          case 'error':
-              toastr.error("{{ Session::get('messege') }}");
-              break;
-      }
-    @endif
- </script>
+  @if(Session::has('messege'))//toatser
+	var type="{{Session::get('alert-type','info')}}"
+	switch(type){
+		case 'info':
+			 toastr.info("{{ Session::get('messege') }}");
+			 break;
+		case 'success':
+			toastr.success("{{ Session::get('messege') }}");
+			break;
+		case 'warning':
+		   toastr.warning("{{ Session::get('messege') }}");
+			break;
+		case 'error':
+			toastr.error("{{ Session::get('messege') }}");
+			break;
+	}
+  @endif
+  </script>
 </body>
 </html>
-
-
-
-
