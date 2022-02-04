@@ -166,7 +166,7 @@
 			<x-errormsg/>
 			@csrf
 			<header>
-				<img src="https://assets.codepen.io/3931482/internal/avatars/users/default.png?format=auto&height=80&version=1592223909&width=80">
+				<img src="{{ asset('logo.png') }}" class="img-fluid">
 			</header>
 
 			<div class="inputs">
