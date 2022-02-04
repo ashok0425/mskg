@@ -9,7 +9,7 @@
 
 
     <div class="row">
-        <div class="col-md-6  col-xl-4 offset-md-3">
+        <div class="col-md-6 offset-md-3 col-12">
             <div class="card mb-3">
              
 
