@@ -163,7 +163,8 @@
            9819091245,9815323221
            <br>
           PAN NO : 609312071
-          
+          <br>
+          Date : {{ date('d M Y') }}
         </p>
         <p class="text-center my-0 py-0 py-1">
            <span class="invoice_no">INVOICE : </span>  <span class="bill ">{{ $orderId }}</span>
