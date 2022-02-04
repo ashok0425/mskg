@@ -5,7 +5,8 @@
         <div class="sidebar-brand-icon rotate-n-15">
         
         </div>
-        <div class="sidebar-brand-text mx-3"><strong>FATFAT CAFE</strong></div>
+        <div class="sidebar-brand-text mx-3"><img src="{{ asset('logo.png') }}" alt="" width="180"></div>
+
     </a>
 
     <!-- Divider -->

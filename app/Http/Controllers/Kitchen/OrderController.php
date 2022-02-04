@@ -21,9 +21,10 @@ class OrderController extends Controller
 
     public function index()
     {
-      $order_detail=Order_detail::join('menus','menus.id','order_details.menu_id')->where('order_details.status',0)->whereDate('order_details.created_at',today())->select('order_details.*','menus.name','menus.image')->get();
+       $orders=Order::where('status',0)->whereDate('created_at',today())->orderBy('created_at','desc')->get();
+      
 
-       return view('kitchen.order.partial',compact('order_detail'));
+       return view('kitchen.order.partial',compact('orders'));
     }
 
    public function Emptypage(){

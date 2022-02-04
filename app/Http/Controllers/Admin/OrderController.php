@@ -55,42 +55,41 @@ class OrderController extends Controller
             return response()->json($data);
 
         }
-        $orderId=1235;
+        $recent_order=Order::orderBy('id','desc')->whereDate('created_at',today())->first();
+        if ($recent_order) {
+            $orderId=str_pad($recent_order->order_id + 1, 3, "0", STR_PAD_LEFT);
+        }else{
+            $orderId=str_pad(1, 3, "0", STR_PAD_LEFT);
+        }
+        $damount=($total*$discount)/100;
          $order=new Order;
          $order->paid=$paid;
          $order->actual_amount=$total;
          $order->exchange=$ex;
-         $order->discount=$discount;
+         $order->discount=$damount;
          $order->order_id=$orderId;
          $order->save();
-
+$order_id=$order->id;
                 
          foreach ($orders as  $order) {
-            $order_detail=new Order_detail;
-               $order_detail->menu_id=$order->menu_id;
-               $order_detail->qty=$order->qty;
-               $order_detail->price=$order->price;
-                        $order_detail->order_id=$orderId;
-              $order_detail->save();
+            $orderdetails=new Order_detail;
+               $orderdetails->menu_id=$order->menu_id;
+               $orderdetails->qty=$order->qty;
+               $orderdetails->price=$order->price;
+             $orderdetails->order_id=$order_id;
+              $orderdetails->save();
 
-          }
-          
-          
-       DB::table('carts')->delete();
-       $data=[
-        'alert'=>1,
-        'message'=>'Bill printed',
-
-    ];
-
-        return response()->json($data);
+          }          
+          DB::table('carts')->delete();
+          $total=$total;
+        return view('admin.order.invoice',compact('orderId','order_id','total'));
      
     }
 
     public function show($id){
-
-        $order_detail=Order_detail::join('menus','menus.id','order_details.menu_id')->where('order_id',$id)->select('order_details.*','menus.name','menus.image')->get();
-       return view('admin.order.show',compact('order_detail','id'));
+        $bill=Order::where('id',$id)->value('order_id');
+        $order_detail=Order_detail::join('menus','menus.id','order_details.menu_id')->where('order_details.order_id',$id)->select('order_details.*','menus.name','menus.image')->get();
+       return view('admin.order.show',compact('order_detail','bill'));
 
 
     }
@@ -122,7 +121,7 @@ class OrderController extends Controller
 
 
     public function status($id){
-        $order=Order_detail::find($id);
+        $order=Order::find($id);
         $order->status=1;
         $order->save();
         $notification=array(
@@ -138,4 +137,14 @@ class OrderController extends Controller
       public function invoice(){
           return view('admin.order.invoice');
       }
+
+
+
+
+      public function itemsell(){
+        $order_detail=DB::table('order_details')->groupBy('menu_id')->select('menu_id')->whereDate('created_at',today())->get();
+       return view('admin.order.sellitem',compact('order_detail'));
+
+
+    }
 }

@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
         
         </div>
-        <div class="sidebar-brand-text mx-3"><strong>FATFAT CAFE</strong></div>
+        <div class="sidebar-brand-text mx-3"><img src="{{ asset('logo.png') }}" alt="" width="180"></div>
     </a>
 
     <!-- Divider -->
@@ -34,7 +34,12 @@
     <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
         <a class="nav-link" href="{{route('admin.orders.today')}}">
         <i class="fas fa-pager"></i>
-        <span>Today SELL</span></a>
+        <span>Today Order</span></a>
+    </li>
+    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.orders.itemsell')}}">
+        <i class="fas fa-pager"></i>
+        <span>Today Sold Item</span></a>
     </li>
     <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
         <a class="nav-link" href="{{route('admin.orders.index')}}">

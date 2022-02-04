@@ -38,6 +38,7 @@ Route::get('today/orders','OrderController@today')->name('orders.today');
 Route::get('filter/orders','OrderController@filter')->name('orders.filter');
 Route::get('chart/orders','OrderController@chart')->name('orders.chart');
 Route::get('orders/status/{id}','OrderController@status')->name('orders.status');
+Route::get('/itemsell/order','OrderController@itemsell')->name('orders.itemsell');
 
 
 

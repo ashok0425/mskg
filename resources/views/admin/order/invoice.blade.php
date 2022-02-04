@@ -117,6 +117,27 @@
 #invoice-POS #legalcopy {
 	margin-top: 5mm;
 }
+.text-center{
+  text-align: center;
+}
+.bill{
+  font-weight: 800;
+  font-size: 21px;
+
+}
+.invoice_no{
+  font-size: 14px;
+}
+.my-0{
+  margin: 0!important;
+}
+
+.py-0{
+  padding: 0!important;
+}
+.py-1{
+  padding: 4px 0!important;
+}
 </style>
 </head>
 <body>
@@ -131,16 +152,30 @@
   
     <div id="mid">
       <div class="info">
-        <h2>Company Name</h2>
-        <p>
-          Address : street city, state 0000</br>
-          Email : JohnDoe@gmail.com</br>
-          PAN NO : 555-5555</br>
+        <div class="my-0 py-0"><img src="{{ asset('logo.png') }}" alt="" width="140"></div>
+        <p class="text-center my-0 py-0">
+          Hanumandas Road
+        </br>
+          Biratnagar,Nepal
+          <br>
+           fatafat.fastfood1@gmail.com
+          </br>
+           9819091245,9815323221
+           <br>
+          PAN NO : 609312071
+          
         </p>
+        <p class="text-center my-0 py-0 py-1">
+           <span class="invoice_no">INVOICE : </span>  <span class="bill ">{{ $orderId }}</span>
+        </p>
+        
       </div>
     </div>
     <!--End Invoice Mid-->
   
+    @php
+        $order=DB::table('order_details')->join('menus','menus.id','order_details.menu_id')->select('order_details.*','menus.name')->where('order_id',$order_id)->get();
+    @endphp
     <div id="bot">
   
       <div id="table">
@@ -153,70 +188,25 @@
               <h2>Qty</h2>
             </td>
             <td class="Rate">
-              <h2>Sub Total (Rs)</h2>
+              <h2>Price (Rs)</h2>
             </td>
           </tr>
-  
+     @foreach ($order as $item)
+      
           <tr class="service">
             <td class="tableitem">
-              <p class="itemtext">Communication</p>
+              <p class="itemtext">{{ $item->name}}</p>
             </td>
             <td class="tableitem">
-              <p class="itemtext">5</p>
+              <p class="itemtext">{{ $item->qty }}</p>
             </td>
             <td class="tableitem">
-              <p class="itemtext">375.00</p>
+              <p class="itemtext">{{ $item->price }}</p>
             </td>
           </tr>
-  
-          <tr class="service">
-            <td class="tableitem">
-              <p class="itemtext">Asset Gathering</p>
-            </td>
-            <td class="tableitem">
-              <p class="itemtext">3</p>
-            </td>
-            <td class="tableitem">
-              <p class="itemtext">225.00</p>
-            </td>
-          </tr>
-  
-          <tr class="service">
-            <td class="tableitem">
-              <p class="itemtext">Design Development</p>
-            </td>
-            <td class="tableitem">
-              <p class="itemtext">5</p>
-            </td>
-            <td class="tableitem">
-              <p class="itemtext">375.00</p>
-            </td>
-          </tr>
-  
-          <tr class="service">
-            <td class="tableitem">
-              <p class="itemtext">Animation</p>
-            </td>
-            <td class="tableitem">
-              <p class="itemtext">20</p>
-            </td>
-            <td class="tableitem">
-              <p class="itemtext">1500.00</p>
-            </td>
-          </tr>
-  
-          <tr class="service">
-            <td class="tableitem">
-              <p class="itemtext">Animation Revisions</p>
-            </td>
-            <td class="tableitem">
-              <p class="itemtext">10</p>
-            </td>
-            <td class="tableitem">
-              <p class="itemtext">750.00</p>
-            </td>
-          </tr>
-  
+          @endforeach
+
+       
          
   
           <tr class="tabletitle">
@@ -225,7 +215,7 @@
               <h2>Total</h2>
             </td>
             <td class="payment">
-              <h2>3,644.25</h2>
+              <h2>{{ $total }}</h2>
             </td>
           </tr>
   
@@ -234,7 +224,11 @@
       <!--End Table-->
   
       <div id="legalcopy">
-        <p class="legal"><strong>Thank you for your visiting us!</strong>  
+        <p class="legal text-center my-0 py-0"><strong>Thank you for  visiting us!
+        </strong>  
+        <p class="text-center my-0 y-0 py-1">
+          Wifi : fatafatCafe
+        </p>
         </p>
       </div>
   

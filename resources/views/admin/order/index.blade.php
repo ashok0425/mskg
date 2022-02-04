@@ -22,7 +22,7 @@
         <table class="table table-striped text-center" id="myTable">
             <thead>
                 <tr>
-                    <th>OrderID</th>
+                    <th>Bill No</th>
                     <th>Amount</th>
                     <th>Paid Amount</th>
                     <th>Exchange Amount</th>
@@ -67,7 +67,7 @@
                     <td>
                         {{ Carbon\Carbon::parse($order->created_at)->format('d M Y') }}
                     </td>
-                    <td><a href="{{ route('admin.orders.show',$order->order_id) }}"  class="btn btn-primary btn-circle"><i class="fas fa-eye"></i></a>
+                    <td><a href="{{ route('admin.orders.show',$order->id) }}"  class="btn btn-primary btn-circle"><i class="fas fa-eye"></i></a>
                         {{-- <a href="{{ route('admin.orders.status',['id'=>$order->id]) }}"  class="delete_row btn btn-danger btn-circle"><i class="fas fa-thumb"></i></a> --}}
                     </td>
 
