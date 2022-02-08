@@ -23,6 +23,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/password','AuthController@password_update')->name('password');
     Route::get('/logout','AuthController@destory')->name('logout');
 
+    Route::resource('categories','CategoryController');
+
 
 Route::resource('menus','MenuController');
 Route::get('menus/delete/{id}','MenuController@destroy')->name('menus.delete');
@@ -39,6 +41,8 @@ Route::get('filter/orders','OrderController@filter')->name('orders.filter');
 Route::get('chart/orders','OrderController@chart')->name('orders.chart');
 Route::get('orders/status/{id}','OrderController@status')->name('orders.status');
 Route::get('/itemsell/order','OrderController@itemsell')->name('orders.itemsell');
+Route::get('/itemsell/show/{category_id}','OrderController@itemsell_show')->name('itemsell.show');
+
 
 
 

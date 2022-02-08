@@ -6,10 +6,11 @@ use App\Models\Menu;
 use Illuminate\Http\Request;
 use File;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Order_detail;
+use App\Models\Category;
 
-class MenuController extends Controller
+
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +19,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus=Menu::orderBy('id','desc')->get();
-        return view('admin.menu.index',compact('menus'));
+        $categories=Category::all();
+        return view('admin.category.index',compact('categories'));
     }
 
     /**
@@ -29,8 +30,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $category=Category::all();
-        return view('admin.menu.create',compact('category'));
+        return view('admin.category.create');
     }
 
     /**
@@ -45,35 +45,27 @@ class MenuController extends Controller
             //code...
         
         $request->validate([
-            'name'=>'required|unique:menus',
-            'price'=>'required',
-            'category'=>'required',
-
-
+            'name'=>'required|unique:categories',
         ]);
-        $menu=new Menu;
-        $menu->name=$request->name;
-        $menu->price=$request->price;
-        $menu->menu_no=$request->menu_no;
-        $menu->category_id=$request->category;
-
+        $category=new Category;
+        $category->name=$request->name;
         $file=$request->file('file');
 
         if($file){
-            $fname=rand().'menu.'.$file->getClientOriginalExtension();
-            $menu->image='upload/menu/'.$fname;
-            $file->move(public_path().'/upload/menu/',$fname);
+            $fname=rand().'category.'.$file->getClientOriginalExtension();
+            $category->image='upload/category/'.$fname;
+            $file->move(public_path().'/upload/category/',$fname);
         }
-        $menu->save();
+        $category->save();
         $notification=array(
             'alert-type'=>'success',
-            'messege'=>'Menu Created succesfully',
+            'messege'=>'category Created succesfully',
            
          );
         } catch (\Throwable $th) {
             $notification=array(
                 'alert-type'=>'error',
-                'messege'=>'Failed to create new menu  ',
+                'messege'=>'Failed to create new category  ',
                
              );
         }
@@ -84,10 +76,10 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Menu  $menu
+     * @param  \App\Models\Menu  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Menu $menu)
+    public function show(Menu $category)
     {
         //
     }
@@ -95,58 +87,51 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Menu  $menu
+     * @param  \App\Models\Menu  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Menu $menu)
+    public function edit(Category $category)
     {
-        $category=Category::all();
-        return view('admin.menu.edit',compact('menu','category'));
+        return view('admin.category.edit',compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Menu  $menu
+     * @param  \App\Models\Menu  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request, Category $category)
     {
         try {
             //code...
         
         $request->validate([
             'name'=>'required',
-            'price'=>'required',
-            'category'=>'required',
 
         ]);
-        $menus=Menu::find($menu->id);
-        $menus->name=$request->name;
-        $menus->category_id=$request->category;
-
-        $menus->price=$request->price;
-        $menus->menu_no=$request->menu_no;
+        $category=Category::find($category->id);
+        $category->name=$request->name;
         $file=$request->file('file');
 
         if($file){
-            File::delete($menus->image);
-            $fname=rand().'menu.'.$file->getClientOriginalExtension();
-            $menus->image='upload/menu/'.$fname;
-            $file->move(public_path().'/upload/menu/',$fname);
+            File::delete($category->image);
+            $fname=rand().'category.'.$file->getClientOriginalExtension();
+            $category->image='upload/category/'.$fname;
+            $file->move(public_path().'/upload/category/',$fname);
         }
 
-        $menus->save();
+        $category->save();
         $notification=array(
             'alert-type'=>'success',
-            'messege'=>'Menu updated succesfully',
+            'messege'=>'category updated succesfully',
            
          );
         } catch (\Throwable $th) {
             $notification=array(
                 'alert-type'=>'error',
-                'messege'=>'Failed to update  menu  ',
+                'messege'=>'Failed to update  category  ',
                
              );
         }
@@ -157,10 +142,10 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Menu  $menu
+     * @param  \App\Models\Menu  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu,$id)
+    public function destroy(Menu $category,$id)
     {
         $order=Order_detail::where('menu_id',$id)->first();
         if($order){
@@ -171,9 +156,9 @@ class MenuController extends Controller
              );
              return redirect()->back()->with($notification);
         }
-        $menu=Menu::find($id);
-        File::delete($menu->image);
-        $menu->delete();
+        $category=Menu::find($id);
+        File::delete($category->image);
+        $category->delete();
         $notification=array(
             'alert-type'=>'success',
             'messege'=>'Menu Deleted succesfully',

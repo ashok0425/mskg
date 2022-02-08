@@ -41,7 +41,7 @@ class OrderController extends Controller
 // Stroing  sales cart item using ajax
     public function store(Request $request,$ex,$paid,$discount=0){
        
-        $orders=DB::table('carts')->join('menus','carts.menu_id','menus.id')->select('carts.*','menus.price')->get();
+        $orders=DB::table('carts')->join('menus','carts.menu_id','menus.id')->select('carts.*','menus.price','menus.category_id')->get();
         $total=0;
         foreach ($orders as $value) {
             $total+=$value->qty*$value->price;
@@ -76,6 +76,8 @@ $order_id=$order->id;
                $orderdetails->menu_id=$order->menu_id;
                $orderdetails->qty=$order->qty;
                $orderdetails->price=$order->price;
+               $orderdetails->category_id=$order->category_id;
+
              $orderdetails->order_id=$order_id;
               $orderdetails->save();
 
@@ -142,8 +144,16 @@ $order_id=$order->id;
 
 
       public function itemsell(){
-        $order_detail=DB::table('order_details')->groupBy('menu_id')->select('menu_id')->whereDate('created_at',today())->get();
+        $order_detail=DB::table('order_details')->groupBy('category_id')->select('category_id')->whereDate('created_at',today())->get();
        return view('admin.order.sellitem',compact('order_detail'));
+
+
+    }
+
+
+    public function itemsell_show($category_id){
+        $order_detail=DB::table('order_details')->where('order_details.category_id',$category_id)->join('menus','menus.id','order_details.menu_id')->whereDate('order_details.created_at',today())->select('order_details.*','menus.name','menus.image')->get();
+       return view('admin.order.sellitem_show',compact('order_detail'));
 
 
     }

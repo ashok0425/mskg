@@ -3,7 +3,7 @@
 @section('content')
    <div class="card shadow">
        <div class="card-header d-flex justify-content-between align-items-center py-3">
-        <h6 class="m-0 font-weight-bold text-primary pt-2">Sold Item Detail</h6>
+        <h6 class="m-0 font-weight-bold text-primary pt-2">Today sell detail</h6>
 
        </div>
       
@@ -17,8 +17,7 @@
                     <th>Price</th>
                     <th>qty</th>
                     <th>Total</th>
-                    <th>Action</th>
-
+                    
 
                 </tr>
             </thead>
@@ -28,22 +27,16 @@
                 @endphp
                 @foreach ($order_detail as $order)
                 @php
-
-                    $qty=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->sum('qty');
-                    $price=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->first();
-                    $image=DB::table('categories')->where('id',$order->category_id)->first();
-                    $total+=$price->price*$qty
+                    
+                    $total+=$order->qty*$order->price;
 
                 @endphp
                 <tr>
-                    <td><img src="{{ asset($image->image) }}" alt="" width="100"></td>
-                    <td>{{ $image->name }}</</td>
-                    <td>{{ $price->price }}</td>
-                    <td>{{ $qty }}</td>
-                    <td>{{ $price->price*$qty }}</td>
-                   
-                    <td><a href="{{ route('admin.itemsell.show',['category_id'=>$order->category_id]) }}"  class="btn btn-primary btn-circle"><i class="fas fa-eye"></i></a>
-
+                    <td><img src="{{ asset($order->image) }}" alt="" width="100"></td>
+                    <td>{{ $order->name }}</</td>
+                    <td>{{ $order->price }}</td>
+                    <td>{{ $order->qty }}</td>
+                    <td>{{ $order->price*$order->qty }}</td>
 
                 </tr>
                 @endforeach
@@ -55,7 +48,6 @@
                    <th></th>
 
                     <th>{{ $total }}</th>
-                    <th></th>
             <th></th>
                 </tr>
             </tfoot>

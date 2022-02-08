@@ -17,9 +17,21 @@
                    <input type="text" name="name" id="" class="form-control" placeholder="Enter menu name" value="{{ $menu->name }}" required>
                </div>
                <div class="col-md-6 mt-3">
+                <label for="name">Category</label>
+               <select name="category" id="" required class="form-control">
+                   <option value="">--select category--</option>
+                   @foreach ($category as $item)
+                   <option value="{{ $item->id }}" @if ($item->id==$menu->category_id)
+                       selected
+                   @endif>{{$item->name}}</option>
+                       
+                   @endforeach
+               </select>
+            </div>
+               {{-- <div class="col-md-6 mt-3">
                 <label for="name">Menu No</label>
                 <input type="text" name="menu_no" id="" class="form-control" placeholder="Enter menu name" value="{{ $menu->menu_no }}" required readonly>
-            </div>
+            </div> --}}
                <div class="col-md-6 mt-3">
                 <label for="name">Price</label>
                 <input type="text" name="price" id="" class="form-control" placeholder="Enter menu price" value="{{ $menu->price }}" required>

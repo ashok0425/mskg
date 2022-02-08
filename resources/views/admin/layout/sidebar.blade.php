@@ -25,34 +25,38 @@
     <!-- <div class="sidebar-heading">
         Dashboard
     </div> -->
-
-    <li class="nav-item {{Request::segment(2)=='menu'?'active':''}}">
+    <li class="nav-item {{Request::segment(2)=='categories'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.categories.index')}}">
+        <i class="fas fa-seedling"></i>
+        <span>Category</span></a>
+    </li>
+    <li class="nav-item {{Request::segment(2)=='menus'?'active':''}}">
         <a class="nav-link" href="{{route('admin.menus.index')}}">
-        <i class="fas fa-folder-minus"></i>
+        <i class="fas fa-utensils"></i>
         <span>Menu</span></a>
     </li>
-    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+    <li class="nav-item {{Request::segment(2)=='today'?'active':''}}">
         <a class="nav-link" href="{{route('admin.orders.today')}}">
         <i class="fas fa-pager"></i>
         <span>Today Order</span></a>
     </li>
-    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+    <li class="nav-item {{Request::segment(2)=='itemsell'?'active':''}}">
         <a class="nav-link" href="{{route('admin.orders.itemsell')}}">
         <i class="fas fa-pager"></i>
-        <span>Today Sold Item</span></a>
+        <span>Today Sold Category</span></a>
     </li>
-    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+    <li class="nav-item {{Request::segment(2)=='orders'?'active':''}}">
         <a class="nav-link" href="{{route('admin.orders.index')}}">
         <i class="fas fa-copy"></i>
         <span>ALL Sell & Report</span></a>
     </li>
-    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+    <li class="nav-item {{Request::segment(2)=='chart'?'active':''}}">
         <a class="nav-link" href="{{route('admin.orders.chart')}}">
         <i class="fas fa-chart-bar"></i>
         <span>Report in chart</span></a>
     </li>
 
-    <li class="nav-item {{Request::segment(2)=='page'?'active':''}}">
+    <li class="nav-item {{Request::segment(2)=='profile'?'active':''}}">
         <a class="nav-link" href="{{route('admin.profile')}}">
         <i class="fas fa-user"></i>
         <span>Profile</span></a>

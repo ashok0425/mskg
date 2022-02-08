@@ -3,38 +3,21 @@
 @section('content')
    <div class="card shadow">
        <div class="card-header d-flex justify-content-between align-items-center py-3">
-        <h6 class="m-0 font-weight-bold text-primary pt-2">Create New Menu </h6>
+        <h6 class="m-0 font-weight-bold text-primary pt-2">Create New Category </h6>
 
        </div>
       <x-errormsg/>
        <div class="card-body">
-       <form action="{{ route('admin.menus.store') }}" method="POST" enctype="multipart/form-data">
+       <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
            <div class="row">
                <div class="col-md-6 mt-3">
                    <label for="name">Name</label>
                    <input type="text" name="name" id="" class="form-control" placeholder="Enter menu name" value="{{ old('name') }}" required>
                </div>
-               <div class="col-md-6 mt-3">
-                <label for="name">Category</label>
-               <select name="category" id="" required class="form-control">
-                   <option value="">--select category--</option>
-                   @foreach ($category as $item)
-                   <option value="{{ $item->id }}">{{$item->name}}</option>
-                       
-                   @endforeach
-               </select>
-            </div>
-               {{-- <div class="col-md-6 mt-3">
-                <label for="name">Menu No</label>
-                <input type="text" name="menu_no" id="" class="form-control" placeholder="Enter menu name" value="{{ rand()}}" required readonly>
-            </div> --}}
-               <div class="col-md-6 mt-3">
-                <label for="name">Price</label>
-                <input type="text" name="price" id="" class="form-control" placeholder="Enter menu price" value="{{ old('price') }}" required>
-            </div>
+              
             <div class="col-md-6 mt-3">
-                <label for="name">Image</label>
+                <label for="name">Image (optional)</label>
                 <div class="custom-file">
                     <input type="file"  class="custom-file-input" id="inputGroupFile01" name="file">
                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
