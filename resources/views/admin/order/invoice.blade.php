@@ -7,6 +7,10 @@
     <title>invoice</title>
 
 <style>
+  *{
+    font-family: Arial, Helvetica, sans-serif!important;
+    font-weight: 700!important;
+  }
 #invoice-POS {
 	box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
 	padding: 2mm;
@@ -220,6 +224,9 @@
         </strong>  
         <p class="text-center my-0 y-0 py-1">
           Wifi : Nopassword
+        </p>
+        <p class="text-center my-0 y-0 py-1">
+          {{ mt_rand(1,1000000) }}
         </p>
         </p>
       </div>
