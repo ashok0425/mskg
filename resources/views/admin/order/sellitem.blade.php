@@ -30,7 +30,7 @@
                 @php
 
                     $qty=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->sum('qty');
-                    $menu_id=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->groupBy('menu_id')->select('order_details.menu_id')->get();
+                    $menu_id=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->groupBy('menu_id')->select('menu_id')->get();
                     foreach ($menu_id  as $value) {
                         $price=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->where('menu_id',$value->menu_id)->first();
                     }
@@ -39,6 +39,7 @@
                     $total+=$price->price*$qty
 
                 @endphp
+
                 <tr>
                     <td><img src="{{ asset($image->image) }}" alt="" width="100"></td>
                     <td>{{ $image->name }}</</td>
