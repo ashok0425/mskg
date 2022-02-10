@@ -7,11 +7,7 @@
     <title>invoice</title>
 
 <style>
-  *,p,.itemtext{
-    font-family: Arial, Helvetica, sans-serif!important;
-    font-weight: 700!important;
-    color: #000!important;
-  }
+ 
 #invoice-POS {
 	box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
 	padding: 2mm;
@@ -134,6 +130,11 @@
 .py-1{
   padding: 4px 0!important;
 }
+*,p,.itemtext{
+    font-family: Arial, Helvetica, sans-serif!important;
+    font-weight: 700!important;
+    color: #000!important;
+  }
 </style>
 </head>
 <body>
