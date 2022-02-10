@@ -66,18 +66,9 @@
 #invoice-POS #top .logo {
 	height: 60px;
 	width: 60px;
-	background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;
-	background-size: 60px 60px;
+	
 }
 
-#invoice-POS .clientlogo {
-	float: left;
-	height: 60px;
-	width: 60px;
-	background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;
-	background-size: 60px 60px;
-	border-radius: 50px;
-}
 
 #invoice-POS .info {
 	display: block;
@@ -228,7 +219,7 @@
         <p class="legal text-center my-0 py-0"><strong>Thank you for  visiting us!
         </strong>  
         <p class="text-center my-0 y-0 py-1">
-          Wifi : fatafatCafe
+          Wifi : Nopassword
         </p>
         </p>
       </div>

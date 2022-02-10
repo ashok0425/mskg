@@ -5,7 +5,7 @@
     $order_detail=DB::table('order_details')->join('menus','menus.id','order_details.menu_id')->where('order_details.status',0)->whereDate('order_details.created_at',today())->select('order_details.*','menus.name','menus.image')->where('order_details.order_id',$order->id)->get();
 @endphp
 
-    <div class="col-md-4">
+    <div class="col-md-3 col-sm-3">
 <div class="card shadow">
     <div class="card-header d-flex justify-content-between">
 <strong>BILL NO : {{ $order->order_id }}</strong>
@@ -14,22 +14,20 @@
       
            <div
             class="size-52 mx-1 custom-bg-orange d-flex align-items-center justify-content-center custom-fs-20 custom-text-white" >
-        <span>Min &nbsp;</span>
+        <span>&nbsp;</span>
         <span id="min{{ $order->id }}" class="btn btn-success btn-sm"></span>
             </div>
 
             <div
             class="size-52 mx-1 custom-bg-orange d-flex align-items-center justify-content-center custom-fs-20 custom-text-white" >
-            <span>Sec &nbsp;</span>
+            <span> &nbsp;</span>
             <span id="sec{{ $order->id }}" class="btn btn-danger btn-sm"></span>
 
             </div>
     </div>
 </div>
-    
-    
-<div class="card-body">
- <table class="table table-striped text-center">
+
+ <table class="table">
      <thead>
          <tr>
              <th>Name</th>
@@ -54,7 +52,6 @@
      </tbody>
      
  </table>
-</div>
 
 </div>
 

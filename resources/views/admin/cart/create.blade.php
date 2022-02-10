@@ -45,10 +45,10 @@
                              @foreach ($menus as $menu)
                             
                              <tr>
-                                 <td><img src="{{ asset($menu->image) }}" alt="" width="60"></td>
-                                 <td>{{ $menu->name }}</td>
+                                 <td><img src="{{ asset($menu->image) }}" alt="" width="50"></td>
+                                 <td class="w-25">{{ $menu->name }}</td>
                                  <td>{{ $menu->price }}</td>
-                                 <td><input type="number" name="qty" class="form-control mx-auto text-center w-75"  value="1" id="qty{{ $menu->id }}"></td>
+                                 <td><input type="number" name="qty" class="form-control mx-auto text-center w-100"  value="1" id="qty{{ $menu->id }}"></td>
              
                                  <td>
                                     <a href="#"  class="add_to_cart btn btn-primary btn-circle" data-menu="{{ $menu->id }}"><i class="fas fa-plus"></i></a>

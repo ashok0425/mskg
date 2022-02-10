@@ -7,7 +7,6 @@
         <th>Name</th>
         <th>Price</th>
         <th>Qty</th>
-        <th>Total</th>
         <th class="d_none">Action</th>
     </tr>
     </thead>
@@ -25,7 +24,6 @@
             <td>{{$cart->price}} </td>
 
             <td> {{$cart->qty}}</td>
-            <td>{{$cart->price*$cart->qty}} </td>
 
             <td class="d_none">
                     <a  class="btn btn-danger delete-carts "   data-id="{{$cart->id}}"><i class="fas fa-trash text-white" ></i></a>
@@ -40,9 +38,12 @@
     <tfoot>
         <tr>
             <th colspan="1">Total</th>
-            <th colspan="2">Rs {{ $total }}</th>
-            <th colspan="2"><label><input type="checkbox" id="check_discount"> Have Discount ?</label>
-            <p class="d-none" id="discount"> <input type="number" id="discount_amount"  placeholder="Discount Amount (Only in case if discount is available) " autocomplete="off" class=" form-control"  name="discount" value="0"></p>
+            <th colspan="3">Rs {{ $total }}</th>
+        </tr>
+        <tr>
+            <th colspan="4"><label><input type="checkbox" id="check_discount"> Have Discount ?</label>
+                
+            <p class="d-none w-50 m-auto" id="discount"> <input type="number" id="discount_amount"  placeholder="Discount Amount (Only in case if discount is available) " autocomplete="off" class=" form-control"  name="discount" value="0"></p>
             </th>
 
 <input type="hidden" value="{{ $total }}" id="total">
@@ -52,9 +53,12 @@
 
         <tr>
             <th>Amount Received</th>
-            <th colspan="2"><input type="number" id="paid_amount" autocomplete="off" class="w-75 form-control" min="1"></th>
+            <th colspan="3"><input type="number" id="paid_amount" autocomplete="off" class="w-75 form-control" min="1"></th>
+        </tr>
+        <tr>
+
             <th>Amount Change</th>
-            <th><input type="text" id="exchange_amount" autocomplete="off" readonly class="w-75 form-control" min="1"></th>
+            <th colspan="3"><input type="text" id="exchange_amount" autocomplete="off" readonly class="w-75 form-control" min="1"></th>
         </tr>
 
         <tr>
