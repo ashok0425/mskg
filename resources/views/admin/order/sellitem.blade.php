@@ -30,7 +30,8 @@
                 @php
 
                     $qty=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->sum('qty');
-                    $price=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->first();
+                    $menu_id=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->groupBy('menu_id')->select('order_details.menu_id')->first();
+                    $price=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->where('menu_id',$menu_id->menu_id)->first();
                     $image=DB::table('categories')->where('id',$order->category_id)->first();
                     $total+=$price->price*$qty
 
@@ -40,7 +41,7 @@
                     <td>{{ $image->name }}</</td>
                     <td>{{ $price->price }}</td>
                     <td>{{ $qty }}</td>
-                    <td>{{ $price->price*$qty }}</td>
+                    <td>{{ $qty*$price->price }}</td>
                    
                     <td><a href="{{ route('admin.itemsell.show',['category_id'=>$order->category_id]) }}"  class="btn btn-primary btn-circle"><i class="fas fa-eye"></i></a>
 
