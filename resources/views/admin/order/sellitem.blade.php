@@ -14,7 +14,6 @@
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
-                    <th>Price</th>
                     <th>qty</th>
                     <th>Total</th>
                     <th>Action</th>
@@ -30,22 +29,17 @@
                 @php
 
                     $qty=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->sum('qty');
-                    $menu_id=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->groupBy('menu_id')->select('menu_id')->first();
-                    foreach ($menu_id  as $value) {
-                        $price=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->where('menu_id',$value->menu_id)->first();
-                    }
-                    
+                    $subtotal=DB::table('order_details')->whereDate('created_at',today())->where('category_id',$order->category_id)->sum('total');
+
                     $image=DB::table('categories')->where('id',$order->category_id)->first();
-                    $total+=$price->price*$qty
+                    $total+=$subtotal;
 
                 @endphp
-
                 <tr>
                     <td><img src="{{ asset($image->image) }}" alt="" width="100"></td>
                     <td>{{ $image->name }}</</td>
-                    <td>{{ $price->price }}</td>
                     <td>{{ $qty }}</td>
-                    <td>{{ $qty*$price->price }}</td>
+                    <td>{{ $subtotal }}</td>
                    
                     <td><a href="{{ route('admin.itemsell.show',['category_id'=>$order->category_id]) }}"  class="btn btn-primary btn-circle"><i class="fas fa-eye"></i></a>
 
@@ -55,7 +49,6 @@
             <tfoot>
                 <tr>
                     <th>Total</th>
-                   <th></th>
                    <th></th>
                    <th></th>
 

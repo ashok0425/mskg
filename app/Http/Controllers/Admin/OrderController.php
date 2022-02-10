@@ -77,6 +77,7 @@ $order_id=$order->id;
                $orderdetails->qty=$order->qty;
                $orderdetails->price=$order->price;
                $orderdetails->category_id=$order->category_id;
+               $orderdetails->total=$order->price*$order->qty;
 
              $orderdetails->order_id=$order_id;
               $orderdetails->save();
