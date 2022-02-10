@@ -96,7 +96,7 @@
 // fastdropdown
 
         $(document).ready(function () {
-            $('.add_to_cart').on('click', function (e) {
+            $(document).on('click','.add_to_cart', function (e) {
                 // $('.response').html();
                 e.preventDefault()
                 var id = $(this).data('menu');

@@ -154,6 +154,7 @@
 
   {{-- toastr  --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+@stack('scripts')
 
   <script>
 	@if(Session::has('messege'))//toatser
@@ -251,7 +252,6 @@
     })
     </script>
 
-@stack('scripts')
 </body>
 
 </html>
