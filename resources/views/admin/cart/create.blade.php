@@ -176,14 +176,6 @@ $(document).on('click','#submit_form',function() {
                 dataType: 'html',
                 success: function (data) {
                     readsales();
-                    // if (data.alert==1) {
-                    //     var m = "<div class='alert alert-success py-2 px-5'>" + data.message + "</div>";
-                    // $('.response').html(m);
-                    //  }else{
-                    //     var m = "<div class='alert alert-danger py-2 px-5'>" + data.message + "</div>";
-                    // $('.response').html(m);
-                    //  }
-
                     myWindow=window;
             myWindow.document.write(data);
             myWindow.focus();

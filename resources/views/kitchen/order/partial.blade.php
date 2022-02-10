@@ -8,7 +8,7 @@
     <div class="col-md-3 col-sm-3">
 <div class="card shadow">
     <div class="card-header d-flex justify-content-between">
-<strong>BILL NO : {{ $order->order_id }}</strong>
+<strong>{{ $order->order_id }}</strong>
     <div class="d-flex  align-items-center">
         
       
@@ -30,8 +30,8 @@
  <table class="table">
      <thead>
          <tr>
-             <th>Name</th>
-             <th>Qty</th>
+             <th class="py-0 my-0">Name</th>
+             <th class="py-0 my-0">Qty</th>
 
          </tr>
      </thead>
@@ -40,9 +40,9 @@
          @foreach ($order_detail as $item)
     
            <tr>
-            <td>{{ $item->name }}</</td>
+            <td class="py-0 my-0">{{ $item->name }}</</td>
 
-            <td>{{ $item->qty }}</</td>
+            <td class="py-0 my-0">{{ $item->qty }}</</td>
 
         </tr>
    
