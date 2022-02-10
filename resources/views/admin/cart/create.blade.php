@@ -27,7 +27,7 @@
                 <form id="btnSave" action="" method="GET">
                     {{ csrf_field() }}
                 
-                        <div class="table-responsive">
+                        <div class="">
                      <table class="table table-striped text-center" id="mycarttable">
                          <thead>
                              <tr>
