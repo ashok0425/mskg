@@ -72,12 +72,13 @@ class OrderController extends Controller
 $order_id=$order->id;
                 
          foreach ($orders as  $order) {
+             $sub=$order->price*$order->qty;
             $orderdetails=new Order_detail;
                $orderdetails->menu_id=$order->menu_id;
                $orderdetails->qty=$order->qty;
                $orderdetails->price=$order->price;
                $orderdetails->category_id=$order->category_id;
-               $orderdetails->total=$order->price*$order->qty;
+               $orderdetails->total=$sub;
 
              $orderdetails->order_id=$order_id;
               $orderdetails->save();
