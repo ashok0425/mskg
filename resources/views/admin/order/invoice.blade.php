@@ -7,7 +7,7 @@
     <title>invoice</title>
 
 <style>
-  *{
+  *,p,.itemtext{
     font-family: Arial, Helvetica, sans-serif!important;
     font-weight: 700!important;
     color: #000!important;
