@@ -8,6 +8,7 @@ use App\Http\Traits\status;
 use Illuminate\Support\Facades\DB;
 use App\Models\Cart;
 use App\Models\Menu;
+use App\Models\Room;
 
 // use App\Models\Order;
 
@@ -19,8 +20,8 @@ class CartController extends Controller
 
     public function index()
     {
-       $carts=DB::table('carts')->join('menus','menus.id','carts.menu_id')->select('carts.*','menus.price','menus.price','menus.name')->get();
-       return view('admin.cart.index',compact('carts'));
+       $rooms=Room::all();
+       return view('admin.cart.index',compact('rooms'));
     }
 
 
@@ -32,13 +33,15 @@ class CartController extends Controller
 
 
 // Stroing  sales cart item using ajax
-    public function store(Request $request,$id,$qty){
+    public function store(Request $request,$id,$qty,$room_id){
        
-        $precart=Cart::where('menu_id',$id)->first();
+        $precart=Cart::where('menu_id',$id)->where('room_id',$room_id)->first();
         if($precart){
+            $precart->qty=$precart->qty+$qty;
+            $precart->save();
             $data=[
-                'alert'=>0,
-                'message'=>'Item Already exist in bill.',
+                'alert'=>1,
+                'message'=>'Item Updated.',
 
             ];
             return response()->json($data);
@@ -47,7 +50,14 @@ class CartController extends Controller
             $cart=new Cart;
             $cart->menu_id=$id;
             $cart->qty=$qty;
+            $cart->room_id=$room_id;
             $cart->save();
+
+            $room=Room::find($room_id);
+            $room->Isbooked==1;
+            $room->save();
+
+            
             $data=[
                 'alert'=>1,
                 'message'=>'Item Added to bill.',

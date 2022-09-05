@@ -10,6 +10,7 @@ use App\Models\Cart;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Order_detail;
+use App\Models\Room;
 
 // use App\Models\Order;
 
@@ -19,15 +20,22 @@ class OrderController extends Controller
 // Note :: active,deactive,destroy,method are place in Traits/status file
     use status;
 
-    public function index()
+    public function index(Request $request)
     {
-       $orders=DB::table('orders')->orderBy('id','desc')->get();
+        
+        if ($request->to==date('Y-m-d',strtotime(today()))) {
+            $request->to=date('Y-m-d',strtotime(today()->addDay(1)));
+        }
+       $orders=DB::table('orders')->join('rooms','rooms.id','orders.room_id')->orderBy('id','desc')->select('rooms.name','rooms.type','orders.*')->get();
+if (isset($request->to)) {
+    $orders=DB::table('orders')->join('rooms','rooms.id','orders.room_id')->orderBy('id','desc')->select('rooms.name','rooms.type','orders.*')->whereBetween('orders.created_at',[$request->from,$request->to])->get();
+}
        return view('admin.order.index',compact('orders'));
     }
 
     public function today()
     {
-       $orders=DB::table('orders')->whereDate('created_at',today())->orderBy('id','desc')->get();
+       $orders=DB::table('orders')->join('rooms','rooms.id','orders.room_id')->orderBy('id','desc')->select('rooms.name','rooms.type','orders.*')->whereDate('orders.created_at',today())->orderBy('id','desc')->get();
        return view('admin.order.today',compact('orders'));
     }
 
@@ -39,7 +47,7 @@ class OrderController extends Controller
 
 
 // Stroing  sales cart item using ajax
-    public function store(Request $request,$ex,$paid,$discount=0){
+    public function store(Request $request,$ex,$paid,$discount=0,$room_id){
        
         $orders=DB::table('carts')->join('menus','carts.menu_id','menus.id')->select('carts.*','menus.price','menus.category_id')->get();
         $total=0;
@@ -68,9 +76,10 @@ class OrderController extends Controller
          $order->exchange=$ex;
          $order->discount=$damount;
          $order->order_id=$orderId;
+         $order->room_id=$room_id;
+
          $order->save();
-$order_id=$order->id;
-                
+        $order_id=$order->id;     
          foreach ($orders as  $order) {
              $sub=$order->price*$order->qty;
             $orderdetails=new Order_detail;
@@ -79,13 +88,14 @@ $order_id=$order->id;
                $orderdetails->price=$order->price;
                $orderdetails->category_id=$order->category_id;
                $orderdetails->total=$sub;
-
-             $orderdetails->order_id=$order_id;
+              $orderdetails->order_id=$order_id;
               $orderdetails->save();
-
           }          
-          DB::table('carts')->delete();
+          DB::table('carts')->where('room_id',$request->room_id)->delete();
           $total=$total;
+          $room=Room::find($room_id);
+            $room->Isbooked==1;
+            $room->save();
         return view('admin.order.invoice',compact('orderId','order_id','total'));
      
     }
@@ -113,15 +123,7 @@ $order_id=$order->id;
 
   }
 
-    public function filter(Request $request)
-    {
-        $select=" ";
-        if (isset($request->from)&&!empty($request->from)&&isset($request->to)&&!empty($request->to)) {
-            $select.= " SELECT * FROM orders WHERE `created_at` BETWEEN '$request->from' AND '$request->to'";
-        }
-        $orders=DB::select($select);
-       return view('admin.order.index',compact('orders'));
-    }
+   
 
 
     public function status($id){

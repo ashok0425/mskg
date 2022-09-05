@@ -144,20 +144,24 @@
 
 <div id="invoice-POS">
 
- 
+   
+  
     <!--End InvoiceTop-->
   
     <div id="mid">
       <div class="info">
-        <div class="my-0 py-0"><img src="{{ asset('logo.png') }}" alt="" width="140"></div>
+        <div class="text-center">
+        <img src="{{ asset('logo.png') }}" alt=""  style="margin: auto!important;width:50%">
+
+        </div>
         <p class="text-center my-0 py-0">
-          Hanumandas Road
+          Biratnagar-12 Roadcess Chowk
         </br>
-          Biratnagar,Nepal
+        In front of Saptakoshi Hospital
           <br>
-           fatafat.fastfood1@gmail.com
+           example@gmail.com
           </br>
-           9819091245,9815323221
+           98232323232,9232223331
            <br>
           PAN NO : 609312071
           <br>

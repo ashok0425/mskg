@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
         
         </div>
-        <div class="sidebar-brand-text mx-3"><img src="{{ asset('logo.png') }}" alt="" width="180"></div>
+        <div class="sidebar-brand-text mx-3"><img src="{{ asset('logo.png') }}" alt="" width="60"></div>
     </a>
 
     <!-- Divider -->
@@ -45,6 +45,35 @@
         <i class="fas fa-pager"></i>
         <span>Today Sold Category</span></a>
     </li>
+   
+
+    <li class="nav-item {{Request::segment(2)=='rooms'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.rooms.index')}}">
+        <i class="fas fa-home"></i>
+        <span>Room/Table</span></a>
+    </li>
+
+    <li class="nav-item {{Request::segment(2)=='today-expenses'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.expenses.today')}}">
+        <i class="fas fa-copy"></i>
+        <span>Today Expenses</span></a>
+    </li>
+
+
+
+    <li class="nav-item {{Request::segment(2)=='expenses'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.expenses.index')}}">
+        <i class="fas fa-copy"></i>
+        <span>Expenses</span></a>
+    </li>
+
+    <li class="nav-item {{Request::segment(2)=='opening_balance'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.opening.balance')}}">
+        <i class="fas fa-copy"></i>
+        <span>Opening Balances</span></a>
+    </li>
+
+
     <li class="nav-item {{Request::segment(2)=='orders'?'active':''}}">
         <a class="nav-link" href="{{route('admin.orders.index')}}">
         <i class="fas fa-copy"></i>

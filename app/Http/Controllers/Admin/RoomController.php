@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Menu;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use File;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Order_detail;
 
-class MenuController extends Controller
+class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +19,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus=Menu::orderBy('id','desc')->get();
-        return view('admin.menu.index',compact('menus'));
+        $rooms=Room::orderBy('id','desc')->get();
+        return view('admin.table_room.index',compact('rooms'));
     }
 
     /**
@@ -29,8 +30,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $category=Category::all();
-        return view('admin.menu.create',compact('category'));
+        return view('admin.table_room.create');
     }
 
     /**
@@ -42,37 +42,27 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|unique:menus',
-            'price'=>'required',
-            'category'=>'required',
-
+            'name'=>'required',
+            'type'=>'required',
 
         ]);
         try {
+            //code...
         
-        $menu=new Menu;
-        $menu->name=$request->name;
-        $menu->price=$request->price;
-        $menu->menu_no=$request->menu_no;
-        $menu->category_id=$request->category;
-
-        $file=$request->file('file');
-
-        if($file){
-            $fname=rand().'menu.'.$file->getClientOriginalExtension();
-            $menu->image='upload/menu/'.$fname;
-            $file->move(public_path().'/upload/menu/',$fname);
-        }
-        $menu->save();
+  
+        $room=new Room;
+        $room->name=$request->name;
+        $room->type=$request->type;
+        $room->save();
         $notification=array(
             'alert-type'=>'success',
-            'messege'=>'Menu Created succesfully',
+            'messege'=>'Created succesfully',
            
          );
         } catch (\Throwable $th) {
             $notification=array(
                 'alert-type'=>'error',
-                'messege'=>'Failed to create new menu  ',
+                'messege'=>'Failed to create  ',
                
              );
         }
@@ -86,7 +76,7 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function show(Menu $menu)
+    public function show(Room $menu)
     {
         //
     }
@@ -97,10 +87,9 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function edit(Menu $menu)
+    public function edit(Room $room)
     {
-        $category=Category::all();
-        return view('admin.menu.edit',compact('menu','category'));
+        return view('admin.table_room.edit',compact('room'));
     }
 
     /**
@@ -110,41 +99,30 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request, Room $room)
     {
         $request->validate([
             'name'=>'required',
-            'price'=>'required',
-            'category'=>'required',
-
+            'type'=>'required',
         ]);
+
         try {
-         
-        $menus=Menu::find($menu->id);
-        $menus->name=$request->name;
-        $menus->category_id=$request->category;
+        //code...
+      
+        $room=Room::find($room->id);
+        $room->name=$request->name;
+        $room->type=$request->type;
+        $room->save();
 
-        $menus->price=$request->price;
-        $menus->menu_no=$request->menu_no;
-        $file=$request->file('file');
-
-        if($file){
-            File::delete($menus->image);
-            $fname=rand().'menu.'.$file->getClientOriginalExtension();
-            $menus->image='upload/menu/'.$fname;
-            $file->move(public_path().'/upload/menu/',$fname);
-        }
-
-        $menus->save();
         $notification=array(
             'alert-type'=>'success',
-            'messege'=>'Menu updated succesfully',
-           
+            'messege'=>'updated succesfully', 
          );
+
         } catch (\Throwable $th) {
             $notification=array(
                 'alert-type'=>'error',
-                'messege'=>'Failed to update  menu  ',
+                'messege'=>'Failed to update    ',
                
              );
         }
@@ -158,23 +136,23 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu,$id)
+    public function destroy(Room $room,$id)
     {
-        $order=Order_detail::where('menu_id',$id)->first();
+        $order=Order::where('table_id',$id)->first();
         if($order){
             $notification=array(
                 'alert-type'=>'info',
-                'messege'=>'You cant delete this item.As this order exists in sell list',
+                'messege'=>'You can\'t delete this item.
+                As this order exists in sell list',
                
              );
              return redirect()->back()->with($notification);
         }
-        $menu=Menu::find($id);
-        File::delete($menu->image);
-        $menu->delete();
+        $room=Room::find($id);
+        $room->delete();
         $notification=array(
             'alert-type'=>'success',
-            'messege'=>'Menu Deleted succesfully',
+            'messege'=>'Deleted succesfully',
            
          );
          return redirect()->back()->with($notification);

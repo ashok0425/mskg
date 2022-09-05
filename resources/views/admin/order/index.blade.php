@@ -4,7 +4,7 @@
    <div class="card shadow">
        <div class="card-header d-flex justify-content-between align-items-center py-3">
         <h6 class="m-0 font-weight-bold text-primary pt-2">SELL'S Data</h6>
-    <form action="{{ route('admin.orders.filter') }}" method="get">
+    <form action="{{ route('admin.orders.index') }}" method="get">
 <div class="d-flex justify-content-between">
 
     <input type="date" name="from" id="" class="form-control" required >
@@ -23,6 +23,10 @@
             <thead>
                 <tr>
                     <th>Bill No</th>
+                    <th>Room/Table</th>
+                    <th>Room/Table <br> Type</th>
+
+
                     <th>Amount</th>
                     <th>Paid Amount</th>
                     <th>Exchange Amount</th>
@@ -50,6 +54,9 @@
                     @endphp
                 <tr>
                     <td>{{ $order->order_id }}</td>
+                    <td>{{ $order->name }}</td>
+                    <td>{{ $order->type=='0'?'Table':'Room' }}</td>
+
                     <th>{{ $order->actual_amount }}</th>
 
                     <td>{{ $order->paid }}</</td>
@@ -76,12 +83,16 @@
 <tfoot>
     <tr>
         <th>Total</th>
+        <th></th>
+        <th></th>
         <th>{{ $total_amount }}</th>
         <th>{{ $total_paid }}</th>
         <th>{{ $total_exchange }}</th>
         <th>{{ $total_discount}}</th>
         <th></th>
         <th></th>
+       
+
 
 
 

@@ -13,6 +13,8 @@
             <thead>
                 <tr>
                     <th>Bill No</th>
+                    <th>Room/Table</th>
+                    <th>Room/Table <br> Type</th>
                     <th>Amount</th>
                     <th>Paid Amount</th>
                     <th>Exchange Amount</th>
@@ -24,10 +26,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($orders as $order)
-                    
+                @foreach ($orders as $order)  
                 <tr>
                     <td>{{ $order->order_id }}</td>
+                    <td>{{ $order->name }}</td>
+                    <td>{{ $order->type=='0'?'Table':'Room' }}</td>
                     <th>{{ $order->actual_amount }}</th>
 
                     <td>{{ $order->paid }}</</td>

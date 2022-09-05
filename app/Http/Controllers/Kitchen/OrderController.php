@@ -10,6 +10,7 @@ use App\Models\Cart;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Order_detail;
+use App\Models\Room;
 
 // use App\Models\Order;
 
@@ -21,10 +22,9 @@ class OrderController extends Controller
 
     public function index()
     {
-       $orders=Order::where('status',0)->whereDate('created_at',today())->orderBy('created_at','desc')->get();
-      
-
-       return view('kitchen.order.partial',compact('orders'));
+       $rooms=Room::all();
+   
+       return view('kitchen.order.partial',compact('rooms'));
     }
 
    public function Emptypage(){

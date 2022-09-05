@@ -101,6 +101,36 @@
 
 
 
+    {{-- opening stock model  --}}
+   <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary opening_balance d-none" data-toggle="modal" data-target="#opening_balance">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="opening_balance" tabindex="-1" role="dialog" aria-labelledby="opening_balanceTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="{{route('admin.opening.balance')}}" method="POST">
+        @csrf
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Enter Today Opening Balance</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    <label for="">Today Opening Balance</label>
+    <input type="text" name="opening_balance" class="form-control">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save </button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
 
 
 
@@ -230,7 +260,7 @@
 	</script>
 
 <script>
-    $('.delete_row').click(function(e){
+    $(document).on('click','.delete_row',function(e){
       e.preventDefault()
     url=$(this).attr('href')
       swal({
@@ -250,8 +280,20 @@
       }
     });
     })
+
     </script>
 
+@php
+    $opening=DB::table('opening_balances')->whereDate('created_at',today())->first();
+
+@endphp
+@if (!$opening)
+ <script>
+  
+    
+  $('.opening_balance').trigger('click')
+  </script>   
+@endif
 </body>
 
 </html>

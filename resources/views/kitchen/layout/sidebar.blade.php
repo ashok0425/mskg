@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
         
         </div>
-        <div class="sidebar-brand-text mx-3"><img src="{{ asset('logo.png') }}" alt="" width="180"></div>
+        <div class="sidebar-brand-text mx-3"><img src="{{ asset('logo.png') }}" alt="" class="img-fluid " width="60"></div>
 
     </a>
 

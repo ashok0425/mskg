@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\OpeningBalance;
 use App\Models\User;
 use File;
 use Hash;
@@ -14,6 +15,9 @@ class AuthController extends Controller
     public function index(){
         return view('admin.login')->with('messege','error');
     }
+
+   
+
 
 
     public function show(){

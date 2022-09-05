@@ -1,77 +1,75 @@
+<style>
+   #cartlist  table, #cartlist  tr{
+        border:1px solid gray;
+        border-collapse: collapse;
+    }
+    tr td,tr th{
+        padding: 0 0.2rem;
+    }
+</style>
 
-<div class="table-responsive">
-
-<table width="100%" class="table table-striped table-bordered table-hover text-center" id="categorytable">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th class="d_none">Action</th>
-    </tr>
-    </thead>
-    <tbody>
+<div class="row" >
+      
     <?php $i=1 ;
     $total=0;
     ?>
 
-    @foreach($carts as $cart)
-    @php
-        $total+=$cart->price*$cart->qty;
-    @endphp
-        <tr>
-            <td>{{$cart->name}} </td>
-            <td>{{$cart->price}} </td>
+    @foreach($rooms as $room)
+    
+    @if (count($room->cart)>0)
 
+    <div class="col-md-6">
+ 
+<div class="card shadow-sm">
+<table  id="categorytable">
+    <tr>
+        <th colspan="2">{{$room->name}} </th>
+    </tr>
+    <tr>
+        <th> Item</th>
+        <th> Price</th>
+        <th> qty</th>
+
+
+    </tr>
+    @foreach ($room->cart as $cart)
+        
+    @php
+        $total+=(int)$cart->menu->price*(int)$cart->qty;
+    @endphp
+       
+        <tr>
+            <td>
+                {{$cart->menu->name}} 
+                <a href="" class="text-danger delete-carts "   data-id="{{$cart->id}}"><i class="fa fa-trash"></i></a>
+            </td>
+            <td>{{$cart->menu->price}} </td>
             <td> {{$cart->qty}}</td>
 
-            <td class="d_none">
-                    <a  class="btn btn-danger delete-carts "   data-id="{{$cart->id}}"><i class="fas fa-trash text-white" ></i></a>
-                </td>
         </tr>
 
     @endforeach
+            
 
-    </tbody>
-    @if (count($carts)>0)
-        
-    <tfoot>
-        <tr>
-            <th colspan="1">Total</th>
-            <th colspan="3">Rs {{ $total }}</th>
-        </tr>
-        <tr>
-            <th colspan="4"><label><input type="checkbox" id="check_discount"> Have Discount ?</label>
-                
-            <p class="d-none w-50 m-auto" id="discount"> <input type="number" id="discount_amount"  placeholder="Discount Amount (Only in case if discount is available) " autocomplete="off" class=" form-control"  name="discount" value="0"></p>
-            </th>
+    <tr>
+        <th >Total</th>
+        <th >Rs {{ $total }}</th>
+    </tr>
 
-<input type="hidden" value="{{ $total }}" id="total">
-        </tr>
+    <tr>
+        <td colspan="3">
 
-        
-
-        <tr>
-            <th>Amount Received</th>
-            <th colspan="3"><input type="number" id="paid_amount" autocomplete="off" class="w-75 form-control" min="1"></th>
-        </tr>
-        <tr>
-
-            <th>Amount Change</th>
-            <th colspan="3"><input type="text" id="exchange_amount" autocomplete="off" readonly class="w-75 form-control" min="1"></th>
-        </tr>
-
-        <tr>
-            <td colspan="5">
-                <button class="btn btn-primary form-control" type="submit" id="submit_form"><i class="fa fa-arrow-right " ></i> Make Bill </button>
-            </td>
-        </tr>
-    </tfoot>
-    @endif
-
+            <button class="btn btn-primary w-100 py-0 my-1 make_bill" data-total="{{$total}}" data-bill_table={{$room->id}} type="submit"   data-toggle="modal" data-target="#exampleModal"><i class="fa fa-arrow-right " ></i> Make Bill </button>
+        </td>
+    </tr>
 </table>
 </div>
+</div>
+@endif
 
+@endforeach
+
+</div>
 <script>
 
     
@@ -91,6 +89,9 @@
     if ($clean.length>=1) {
     $total=$('#total').val();
     $discount=$('#discount_amount').val();
+    if ($discount==undefined||$discount=='') {
+        $discount=0;
+    }
     $damount=($total*$discount)/100;
     $refund=$paid-$total+$damount;
 
@@ -98,31 +99,12 @@
 }
     }
 
-    $('#check_discount').click(function(){
-        if ($(this).prop('checked')) {
-            $('#discount').removeClass('d-none')
-        $('#discount').addClass('d-block')
-        }else{
-            $('#discount').addClass('d-none')
-        $('#discount').removeClass('d-block')
-        }
-     
-
-    })
-
-
-
-    $('#check_discount').click(function(){
-        if ($(this).prop('checked')) {
-            $('#discount').removeClass('d-none')
-        $('#discount').addClass('d-block')
-        }else{
-            $('#discount').addClass('d-none')
-        $('#discount').removeClass('d-block')
-        }
-     
-
-    })
-
   
+  $(document).on('click','.make_bill',function(){
+    $('#total').val($(this).data('total'))
+    $('#total_amount').html($(this).data('total'))
+
+    $('#bill_table').val($(this).data('bill_table'))
+
+  })
 </script>
