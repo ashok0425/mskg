@@ -47,7 +47,7 @@ if (isset($request->to)) {
 
 
 // Stroing  sales cart item using ajax
-    public function store(Request $request,$ex,$paid,$discount=0,$room_id){
+    public function store(Request $request,$ex,$paid,$discount=0,$room_id,$discount_type){
        
         $orders=DB::table('carts')->join('menus','carts.menu_id','menus.id')->select('carts.*','menus.price','menus.category_id')->get();
         $total=0;
@@ -70,6 +70,10 @@ if (isset($request->to)) {
             $orderId=str_pad(1, 3, "0", STR_PAD_LEFT);
         }
         $damount=($total*$discount)/100;
+        if ($discount_type==1) {
+            $damount=$discount;
+        }
+        
          $order=new Order;
          $order->paid=$paid;
          $order->actual_amount=$total;

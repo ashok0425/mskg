@@ -89,10 +89,12 @@
     if ($clean.length>=1) {
     $total=$('#total').val();
     $discount=$('#discount_amount').val();
-    if ($discount==undefined||$discount=='') {
-        $discount=0;
-    }
+    $discount_type=$('#discount_amount').val();
     $damount=($total*$discount)/100;
+
+    if ($discount_type==1) {
+        $discount=$discount;
+    }
     $refund=$paid-$total+$damount;
 
     $('#exchange_amount').val($refund)
