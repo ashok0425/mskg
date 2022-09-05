@@ -30,8 +30,13 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $total=0;
+                @endphp
                 @foreach ($expenses as $expense)
-                    
+                    @php
+                        $total=$total+$expense->amount;
+                    @endphp
                 <tr>
                     <td>{{ $expense->name }}</td>
                     <td>{{ $expense->amount }}</td>
@@ -47,6 +52,15 @@
                 @endforeach
 
             </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total</td>
+                    <td>{{$total}}</td>
+ <td></td>
+ <td></td>
+
+                </tr>
+            </tfoot>
         </table>
     </div>
        </div>

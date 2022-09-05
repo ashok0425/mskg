@@ -20,13 +20,27 @@
                     <th>Exchange Amount</th>
                     <th>Discount</th>
                     <th>SOLD ON</th>
-                    <th>Status</th>
+                    {{-- <th>Status</th> --}}
                     <th>Action</th>
 
                 </tr>
             </thead>
             <tbody>
-                @foreach ($orders as $order)  
+                @php
+                    $total=0;
+                    $paid=0;
+                    $exchange=0;
+                    $discount=0;
+
+                @endphp
+                @foreach ($orders as $order) 
+                @php
+                    $total=$total+$order->actual_amount;
+                    $paid=$total+$order->paid;
+                    $exchange=$total+$order->exchange;
+                    $discount=$total+$order->discount;
+
+                @endphp 
                 <tr>
                     <td>{{ $order->order_id }}</td>
                     <td>{{ $order->name }}</td>
@@ -45,7 +59,7 @@
                     <td>
                         {{ Carbon\Carbon::parse($order->created_at)->format('d M Y') }}
                     </td>
-                    <td>@if ($order->status==0)
+                    {{-- <td>@if ($order->status==0)
                         <p class="py-0 my-0"><span class="badge bg-danger text-light">Pending</span></p> 
 
                        <a href="{{ route('admin.orders.status',['id'=>$order->id]) }}"><span class="badge bg-success text-light">Click if served</span></a> 
@@ -53,7 +67,7 @@
                         @else   
                         <a><span class="badge bg-success text-light">Served</span></a> 
 
-                    @endif</td>
+                    @endif</td> --}}
                     <td><a href="{{ route('admin.orders.show',$order->id) }}"  class="btn btn-primary btn-circle"><i class="fas fa-eye"></i></a>
                         {{-- <a href="{{ route('admin.menus.delete',['id'=>$order->id]) }}"  class="delete_row btn btn-danger btn-circle"><i class="fas fa-trash"></i></a> --}}
                     </td>
@@ -62,6 +76,21 @@
                 @endforeach
 
             </tbody>
+
+            <tfoot>
+                <tr>
+                    <td>Total</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{$total}}</td>
+                    <td>{{$paid}}</td>
+                    <td>{{$exchange}}</td>
+                    <td>{{$discount}}</td>
+
+
+
+                </tr>
+            </tfoot>
         </table>
     </div>
        </div>

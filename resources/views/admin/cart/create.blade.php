@@ -130,12 +130,12 @@
                         <th> Rs<span id="total_amount"> </span></th>
                     </tr>
                     <tr>
-                        <th> Have Discount ? <div id="discount_type">
-                            <select name="" id="">
+                        <th> Have Discount ? 
+                            <select name="" id="discount_type">
                             <option value="0">Percent</option>
                             <option value="1">Rupees</option>
 
-                        </select></div>
+                        </select>
                         </th>
                         <th> <input type="number" id="discount_amount"  placeholder="Discount in % (only if any)" autocomplete="off" class=" form-control"  name="discount" value="0"></th>
                     </tr>
@@ -248,14 +248,13 @@
             paid = $('#paid_amount').val()
             discount = $('#discount_amount').val()
             discount_type = $('#discount_type').val()
-
             room_id = $('#bill_table').val()
 
 
             if ($paid != '') {
                 $.ajax({
                     type: 'get',
-                    url: "{{ url('admin/order/add/') }}/" + ex + '/' + paid + '/' + discount+'/'+room_id+discount_type,
+                    url: "{{ url('admin/order/add/') }}/" + ex + '/' + paid + '/' + discount+'/'+room_id+'/'+discount_type,
                     dataType: 'html',
                     success: function(data) {
                         readsales();
