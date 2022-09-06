@@ -19,9 +19,17 @@ class ExpensesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->to==date('Y-m-d',strtotime(today()))) {
+            $request->to=date('Y-m-d',strtotime(today()->addDay(1)));
+        }
         $expenses=Expenses::orderBy('id','desc')->get();
+
+        if(isset($request->to)){
+            $expenses=Expenses::whereBetween('created_at',[$request->from,$request->to])->orderBy('id','desc')->get();
+
+        }
         return view('admin.expense.index',compact('expenses'));
     }
 

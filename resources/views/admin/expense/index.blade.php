@@ -2,8 +2,20 @@
 
 @section('content')
    <div class="card shadow">
+    <form action="{{ route('admin.expenses.index') }}" method="get">
+        <div class="d-flex justify-content-between">
+        
+            <input type="date" name="from" id="" class="form-control" required >
+            <input type="date" name="to" id="" class="form-control" required >
+        
+            <input type="submit" name="" id="" class="form-control btn btn-primary">
+        </div>
+        
+        </form>
        <div class="card-header d-flex justify-content-between align-items-center py-3">
         <h6 class="m-0 font-weight-bold text-primary pt-2">Expenses Data</h6>
+
+
 
         @if (isset($today_opening))
         <p><strong>
