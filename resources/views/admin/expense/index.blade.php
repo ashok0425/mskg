@@ -18,8 +18,13 @@
 
 
         @if (isset($today_opening))
-        <p><strong>
-            Today Opening : {{$today_opening}}</strong></p>
+        <p>
+            
+            <strong>Today Opening : {{$today_opening}}</strong> |
+            <strong>Today Expenses : {{$today_expenses}}</strong> |
+            <strong>Today Remaining : {{$today_opening-$today_expenses}}</strong>
+        
+        </p>
         @endif
         
         <a href="{{ route('admin.expenses.create') }}" class="btn btn-primary pull-right float-right">

@@ -27,10 +27,12 @@
              <tr>
                  <td>{{ $room->name }}</td>
                  <td>{{ $room->type==0?'Table':'Room' }}</td>
-                 <td>@if ($room->Isbooked==0)
-                    <span class="badge bg-primary text-white">Not Booked</span>
-                    @else 
+                 <td>@if ($room->Isbooked==1)
                     <span class="badge bg-danger text-white">Booked</span>
+
+                    @else 
+                    <span class="badge bg-primary text-white">Not Booked</span>
+
                  @endif </td>
 
 

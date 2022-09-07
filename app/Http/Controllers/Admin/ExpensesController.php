@@ -37,7 +37,9 @@ class ExpensesController extends Controller
     {
         $today_opening=OpeningBalance::whereDate('created_at',today())->value('amount');
         $expenses=Expenses::orderBy('id','desc')->whereDate('created_at',today())->get();
-        return view('admin.expense.index',compact('expenses','today_opening'));
+        $today_expenses=Expenses::orderBy('id','desc')->whereDate('created_at',today())->sum('amount');
+
+        return view('admin.expense.index',compact('expenses','today_opening','today_expenses'));
     }
 
     /**

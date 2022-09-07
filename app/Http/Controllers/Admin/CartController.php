@@ -36,6 +36,7 @@ class CartController extends Controller
     public function store(Request $request,$id,$qty,$room_id){
        
         $precart=Cart::where('menu_id',$id)->where('room_id',$room_id)->first();
+      
         if($precart){
             $precart->qty=$precart->qty+$qty;
             $precart->save();
@@ -51,18 +52,18 @@ class CartController extends Controller
             $cart->menu_id=$id;
             $cart->qty=$qty;
             $cart->room_id=$room_id;
-            $cart->save();
-
+            $cart->save();  
             $room=Room::find($room_id);
-            $room->Isbooked==1;
-            $room->save();
-
-            
+            $room->Isbooked=1;
+            $room->save();        
             $data=[
                 'alert'=>1,
                 'message'=>'Item Added to bill.',
 
             ];
+
+        
+
             return response()->json($data);
 
 
