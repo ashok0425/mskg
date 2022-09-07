@@ -26,6 +26,14 @@
                    <option value="1"@if ($room->type==1)
                     selected
                 @endif>Room</option>
+
+                <option value="2"@if ($room->type==2)
+                    selected
+                @endif>Cabin</option>
+
+                <option value="3"@if ($room->type==3)
+                    selected
+                @endif>Online</option>
                        
                </select>
             </div>

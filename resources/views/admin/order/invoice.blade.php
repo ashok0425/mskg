@@ -159,12 +159,11 @@
         </br>
         In front of Saptakoshi Hospital
           <br>
-           example@gmail.com
+          mskgbrt@gmail.com
           </br>
-           98232323232,9232223331
+          9826744974
            <br>
-          PAN NO : 609312071
-          <br>
+         
           Date : {{ date('d M Y') }}
         </p>
         <p class="text-center my-0 py-0 py-1">
@@ -177,6 +176,7 @@
   
     @php
         $order=DB::table('order_details')->join('menus','menus.id','order_details.menu_id')->select('order_details.*','menus.name')->where('order_id',$order_id)->get();
+        $mainorder=DB::table('orders')->where('id',$order_id)->first();
     @endphp
     <div id="bot">
   
@@ -217,9 +217,33 @@
               <h2>Total</h2>
             </td>
             <td class="payment">
-              <h2>{{ $total }}</h2>
+              <h2>{{ $mainorder->actual_amount }}</h2>
             </td>
           </tr>
+
+          @if (!empty($mainorder->discount))
+              
+          <tr class="tabletitle">
+            <td></td>
+            <td class="Rate">
+              <h2>Discount</h2>
+            </td>
+            <td class="payment">
+              <h2>{{ $mainorder->discount }}</h2>
+            </td>
+          </tr>
+
+
+          <tr class="tabletitle">
+            <td></td>
+            <td class="Rate">
+              <h2>Total</h2>
+            </td>
+            <td class="payment">
+              <h2>{{ $mainorder->actual_amount-$mainorder->discount }}</h2>
+            </td>
+          </tr>
+          @endif
   
         </table>
       </div>

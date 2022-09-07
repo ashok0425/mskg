@@ -21,6 +21,9 @@
                    <option value="">--select Type--</option>
                    <option value="0">Table</option>
                    <option value="1">Room</option>
+                   <option value="2">Cabin </option>
+                   <option value="3">Online</option>
+
                        
                </select>
             </div>

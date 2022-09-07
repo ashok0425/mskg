@@ -55,7 +55,22 @@
                 <tr>
                     <td>{{ $order->order_id }}</td>
                     <td>{{ $order->name }}</td>
-                    <td>{{ $order->type=='0'?'Table':'Room' }}</td>
+                    <td>
+                        @if ($order->type==0)
+                            Table
+                        @endif
+                        @if ($order->type==1)
+                        Room
+                    @endif
+
+                    @if ($order->type==2)
+                    Cabin
+                @endif
+
+                @if ($order->type==3)
+                Online
+            @endif
+                    </td>
 
                     <th>{{ $order->actual_amount }}</th>
 
