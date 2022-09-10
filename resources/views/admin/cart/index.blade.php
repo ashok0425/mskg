@@ -24,6 +24,8 @@
 <table  id="categorytable">
     <tr>
         <th colspan="2">{{$room->name}} </th>
+        <th colspan="2"><a href="#" class="btn btn-sm btn-danger" id="only_print" data-room_id="{{$room->id}}"><i class="fa fa-print"></i></a> </th>
+
     </tr>
     <tr>
         <th> Item</th>

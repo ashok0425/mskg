@@ -152,6 +152,12 @@
                         <th ><input type="text" id="exchange_amount" autocomplete="off" readonly class="w-100 form-control" min="1"></th>
                     </tr>
             
+                    <tr style="margin-top:1rem!important;" class="d-none security_code_wrapper">
+            
+                        <th colspan="2" class="d-flex w-100"><input type="password" id="security_code" autocomplete="off"  class="w-100 form-control " min="1" placeholder="Enter  Code For Discount">
+                        <button class="btn btn-primary" id="security_code_btn">verify</button>
+                        </th>
+                    </tr>
                    
                 </table>
 
@@ -236,12 +242,7 @@
                 }
             })
         })
-    </script>
-
-
-
-
-    <script>
+    let isverify=0;
         $(document).on('click', '#submit_form', function() {
 
             ex = $('#exchange_amount').val()
@@ -250,6 +251,15 @@
             discount_type = $('#discount_type').val()
             room_id = $('#bill_table').val()
 
+            if (isverify==0) {
+               
+            if (parseInt(discount)!=0) {
+                $('.security_code_wrapper').removeClass('d-none')
+                $('.security_code_wrapper').addClass('d-inline-block')
+
+                return false;
+            }
+        }
 
             if ($paid != '') {
                 $.ajax({
@@ -262,7 +272,7 @@
                         myWindow.document.write(data);
                         myWindow.focus();
                         myWindow.print();
-                        myWindow.close(); //missing code
+                        // myWindow.close(); //missing code
                         location.reload()
                     }
                 })
@@ -271,5 +281,66 @@
 
 
         })
-    </script>
+
+
+
+// {{-- print  --}}
+    $(document).on('click', '#only_print', function(e) {
+        e.preventDefault();
+        room_id = $(this).data('room_id')
+
+            $.ajax({
+                type: 'get',
+                url: "{{ url('admin/cart/print/') }}/" + room_id,
+                dataType: 'html',
+                success: function(data) {
+                    readsales();
+                    myWindow = window;
+                    myWindow.document.write(data);
+                    myWindow.focus();
+                    myWindow.print();
+                    update_cart();
+                    // myWindow.close(); //missing code
+                    location.reload()
+                }
+            })
+
+
+    })
+
+    function update_cart(){
+    $.ajax({
+                type: 'get',
+                url: "{{ url('admin/cart/print_update/') }}/" + room_id,
+                success: function(data) {
+                }
+            })
+}
+
+$('#security_code_btn').click(function(){
+    let security_code=$('#security_code').val();
+    if (security_code.trim().length<=0) {
+        alert('Enter Discount Code')
+        return false;
+    }
+    $.ajax({
+                type: 'get',
+                url: "{{ url('admin/verify_security/') }}/" + security_code,
+                success: function(data) {
+                    if (data==1) {
+                    isverify=1;
+                    $('.security_code_wrapper').removeClass('d-inline-block')
+                     $('.security_code_wrapper').addClass('d-none')
+                        toastr.success('Security code match');
+                        
+                    }else{
+                        toastr.error('Security code doesn\'t match');
+                    }
+                }
+            })
+})
+
+    
+
+</script>
 @endpush

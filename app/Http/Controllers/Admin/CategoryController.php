@@ -8,7 +8,7 @@ use File;
 use App\Http\Controllers\Controller;
 use App\Models\Order_detail;
 use App\Models\Category;
-
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -166,5 +166,20 @@ class CategoryController extends Controller
          );
          return redirect()->back()->with($notification);
 
+    }
+
+    function security(){
+      $code=  DB::table('security_code')->where('id',1)->value('code');
+        return view('admin.code.index',compact('code'));
+    }
+
+    function securityStore(Request $request){
+        DB::table('security_code')->where('id',1)->update(['code'=>$request->code]);
+        $notification=array(
+            'alert-type'=>'success',
+            'messege'=>'Updated succesfully',
+           
+         );
+         return redirect()->back()->with($notification);
     }
 }

@@ -90,6 +90,16 @@
         <i class="fas fa-user"></i>
         <span>Profile</span></a>
     </li>
+
+    @if (__getAdmin()->id ==3)
+        
+    <li class="nav-item {{Request::segment(2)=='code'?'active':''}}">
+        <a class="nav-link" href="{{route('admin.code')}}">
+        <i class="fas fa-user"></i>
+        <span>Code</span></a>
+    </li>
+    @endif
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

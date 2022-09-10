@@ -81,6 +81,22 @@ class CartController extends Controller
     }
 
 
+function print($room_id){
+  return view('admin.cart.print',compact('room_id'));
+}
 
+function updateIsprint($room_id){
+    DB::table('carts')->where('room_id',$room_id)->update(['isprint'=>1]);
+}
+function verify_security($security_code){
+    $code=  DB::table('security_code')->where('id',1)->value('code');
+   if($security_code==$code){
+    session()->put('security_code',1);
+    return response(1);
+   }else{
+    return response(0);
+
+   }
+}
 
 }
