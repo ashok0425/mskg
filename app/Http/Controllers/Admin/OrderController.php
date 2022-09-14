@@ -49,7 +49,7 @@ if (isset($request->to)) {
 // Stroing  sales cart item using ajax
     public function store(Request $request,$ex,$paid,$discount=0,$room_id,$discount_type){
        
-        $orders=DB::table('carts')->join('menus','carts.menu_id','menus.id')->select('carts.*','menus.price','menus.category_id')->get();
+        $orders=DB::table('carts')->join('menus','carts.menu_id','menus.id')->select('carts.*','menus.price','menus.category_id')->where('room_id',$room_id)->get();
         $total=0;
         foreach ($orders as $value) {
             $total+=$value->qty*$value->price;
@@ -95,7 +95,7 @@ if (isset($request->to)) {
               $orderdetails->order_id=$order_id;
               $orderdetails->save();
           }          
-          DB::table('carts')->where('room_id',$request->room_id)->delete();
+          DB::table('carts')->where('room_id',$room_id)->delete();
           $total=$total;
           $room=Room::find($room_id);
             $room->Isbooked==1;
