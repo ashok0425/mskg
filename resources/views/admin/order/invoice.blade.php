@@ -253,7 +253,7 @@
         <p class="legal text-center my-0 py-0"><strong>Thank you for  visiting us!
         </strong>  
         <p class="text-center my-0 y-0 py-1">
-          Wifi : Nopassword
+          Wifi : LEDtronics123
         </p>
         <p class="text-center my-0 y-0 py-1">
           {{ mt_rand(1,1000000) }}
