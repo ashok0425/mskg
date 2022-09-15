@@ -102,74 +102,6 @@
         
     <!-- /page content -->
 
-
-
-
-
-    {{-- modal for bill payment --}}
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Payment Detail</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-     
-                <input type="hidden" name="" id="total">
-                <input type="hidden" name="" id="bill_table">
-
-                <table class="w-100">
-
-                    <tr>
-                        <th>Total
-                        </th>
-                        <th> Rs<span id="total_amount"> </span></th>
-                    </tr>
-                    <tr>
-                        <th> Have Discount ? 
-                            <select name="" id="discount_type">
-                            <option value="0">Percent</option>
-                            <option value="1">Rupees</option>
-
-                        </select>
-                        </th>
-                        <th> <input type="number" id="discount_amount"  placeholder="Discount in % (only if any)" autocomplete="off" class=" form-control"  name="discount" value="0"></th>
-                    </tr>
-            
-                    
-            
-                    <tr style="margin-top:1rem!important;">
-                        <th>Amount Received</th>
-                        <th><input type="number" id="paid_amount" autocomplete="off" class="w-100 form-control" min="1"></th>
-                    </tr>
-                    <tr style="margin-top:1rem!important;">
-            
-                        <th>Amount Change</th>
-                        <th ><input type="text" id="exchange_amount" autocomplete="off" readonly class="w-100 form-control" min="1"></th>
-                    </tr>
-            
-                    <tr style="margin-top:1rem!important;" class="d-none security_code_wrapper">
-            
-                        <th colspan="2" class="d-flex w-100"><input type="password" id="security_code" autocomplete="off"  class="w-100 form-control " min="1" placeholder="Enter  Code For Discount">
-                        <button class="btn btn-primary" id="security_code_btn">verify</button>
-                        </th>
-                    </tr>
-                   
-                </table>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="submit_form">Save</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
 @endsection
 @push('scripts')
   
@@ -242,29 +174,13 @@
                 }
             })
         })
-    let isverify=0;
+  
         $(document).on('click', '#submit_form', function() {
-
-            ex = $('#exchange_amount').val()
-            paid = $('#paid_amount').val()
-            discount = $('#discount_amount').val()
-            discount_type = $('#discount_type').val()
-            room_id = $('#bill_table').val()
-
-            if (isverify==0) {
-               
-            if (parseInt(discount)!=0) {
-                $('.security_code_wrapper').removeClass('d-none')
-                $('.security_code_wrapper').addClass('d-inline-block')
-
-                return false;
-            }
-        }
-
-            if ($paid != '') {
+            // room_id = $(this).data('bill_table')
+            alert(room_id)
                 $.ajax({
                     type: 'get',
-                    url: "{{ url('admin/order/add/') }}/" + ex + '/' + paid + '/' + discount+'/'+room_id+'/'+discount_type,
+                    url: "{{ url('admin/order/add/') }}/" +room_id,
                     dataType: 'html',
                     success: function(data) {
                         readsales();
@@ -276,13 +192,13 @@
                         location.reload()
                     }
                 })
-            }
+            
 
 
 
         })
 
-
+      
 
 // {{-- print  --}}
     $(document).on('click', '#only_print', function(e) {
@@ -317,28 +233,7 @@
             })
 }
 
-$('#security_code_btn').click(function(){
-    let security_code=$('#security_code').val();
-    if (security_code.trim().length<=0) {
-        alert('Enter Discount Code')
-        return false;
-    }
-    $.ajax({
-                type: 'get',
-                url: "{{ url('admin/verify_security/') }}/" + security_code,
-                success: function(data) {
-                    if (data==1) {
-                    isverify=1;
-                    $('.security_code_wrapper').removeClass('d-inline-block')
-                     $('.security_code_wrapper').addClass('d-none')
-                        toastr.success('Security code match');
-                        
-                    }else{
-                        toastr.error('Security code doesn\'t match');
-                    }
-                }
-            })
-})
+
 
     
 

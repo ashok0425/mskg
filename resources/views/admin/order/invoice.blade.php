@@ -159,8 +159,7 @@
         </br>
         In front of Saptakoshi Hospital
           <br>
-          mskgbrt@gmail.com
-          </br>
+         
           9826744974
            <br>
          

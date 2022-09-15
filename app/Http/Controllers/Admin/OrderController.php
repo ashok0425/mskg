@@ -45,63 +45,31 @@ if (isset($request->to)) {
        return view('admin.cart.create',compact('menus'));
     }
 
-
 // Stroing  sales cart item using ajax
-    public function store(Request $request,$ex,$paid,$discount=0,$room_id,$discount_type){
+    public function updateOrderStatus($ex,$paid,$discount=0,$order_id,$discount_type,$payment_type){
        
-        $orders=DB::table('carts')->join('menus','carts.menu_id','menus.id')->select('carts.*','menus.price','menus.category_id')->where('room_id',$room_id)->get();
-        $total=0;
-        foreach ($orders as $value) {
-            $total+=$value->qty*$value->price;
-        }
-        if(count($orders)<=0){
-            $data=[
-                'alert'=>0,
-                'message'=>'No item in cart',
-
-            ];
-            return response()->json($data);
-
-        }
-        $recent_order=Order::orderBy('id','desc')->whereDate('created_at',today())->first();
-        if ($recent_order) {
-            $orderId=str_pad($recent_order->order_id + 1, 3, "0", STR_PAD_LEFT);
-        }else{
-            $orderId=str_pad(1, 3, "0", STR_PAD_LEFT);
-        }
-        $damount=($total*$discount)/100;
-        if ($discount_type==1) {
-            $damount=$discount;
-        }
+     
+        try {
+            //code...
         
-         $order=new Order;
+         $order= Order::find($order_id);
+
+         $damount=($order->actual_amount*$discount)/100;
+         if ($discount_type==1) {
+             $damount=$discount;
+         }
          $order->paid=$paid;
-         $order->actual_amount=$total;
          $order->exchange=$ex;
          $order->discount=$damount;
-         $order->order_id=$orderId;
-         $order->room_id=$room_id;
-
+         $order->status=1;
+         $order->payment_mode=$payment_type;
          $order->save();
-        $order_id=$order->id;     
-         foreach ($orders as  $order) {
-             $sub=$order->price*$order->qty;
-            $orderdetails=new Order_detail;
-               $orderdetails->menu_id=$order->menu_id;
-               $orderdetails->qty=$order->qty;
-               $orderdetails->price=$order->price;
-               $orderdetails->category_id=$order->category_id;
-               $orderdetails->total=$sub;
-              $orderdetails->order_id=$order_id;
-              $orderdetails->save();
-          }          
-          DB::table('carts')->where('room_id',$room_id)->delete();
-          $total=$total;
-          $room=Room::find($room_id);
-            $room->Isbooked==1;
-            $room->save();
-        return view('admin.order.invoice',compact('orderId','order_id','total'));
-     
+       return 1;
+         
+        } catch (\Throwable $th) {
+            return 0;
+
+        }
     }
 
     public function show($id){
@@ -164,5 +132,62 @@ if (isset($request->to)) {
        return view('admin.order.sellitem_show',compact('order_detail'));
 
 
+    }
+
+
+
+
+    // Stroing  sales cart item using ajax
+    public function store($room_id){
+       
+        $orders=DB::table('carts')->join('menus','carts.menu_id','menus.id')->select('carts.*','menus.price','menus.category_id')->where('room_id',$room_id)->get();
+        $total=0;
+        foreach ($orders as $value) {
+            $total+=$value->qty*$value->price;
+        }
+        if(count($orders)<=0){
+            $data=[
+                'alert'=>0,
+                'message'=>'No item in cart',
+
+            ];
+            return response()->json($data);
+
+        }
+        $recent_order=Order::orderBy('id','desc')->whereDate('created_at',today())->first();
+        if ($recent_order) {
+            $orderId=str_pad($recent_order->order_id + 1, 3, "0", STR_PAD_LEFT);
+        }else{
+            $orderId=str_pad(1, 3, "0", STR_PAD_LEFT);
+        }
+    
+         $order=new Order;
+         $order->paid=0;
+         $order->actual_amount=$total;
+         $order->exchange=0;
+         $order->discount=0;
+         $order->order_id=$orderId;
+         $order->room_id=$room_id;
+         $order->save();
+
+        $order_id=$order->id;     
+         foreach ($orders as  $order) {
+             $sub=$order->price*$order->qty;
+            $orderdetails=new Order_detail;
+               $orderdetails->menu_id=$order->menu_id;
+               $orderdetails->qty=$order->qty;
+               $orderdetails->price=$order->price;
+               $orderdetails->category_id=$order->category_id;
+               $orderdetails->total=$sub;
+              $orderdetails->order_id=$order_id;
+              $orderdetails->save();
+          }          
+          DB::table('carts')->where('room_id',$room_id)->delete();
+          $total=$total;
+          $room=Room::find($room_id);
+            $room->Isbooked==1;
+            $room->save();
+        return view('admin.order.invoice',compact('orderId','order_id','total'));
+     
     }
 }

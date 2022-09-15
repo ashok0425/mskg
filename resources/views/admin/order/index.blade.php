@@ -31,7 +31,9 @@
                     <th>Paid Amount</th>
                     <th>Exchange Amount</th>
                     <th>Discount</th>
-                    <th>SOLD ON</th>                    
+                    <th> Mode</th>
+                    <th>SOLD ON</th>  
+
                     <th>Action</th>
 
                 </tr>
@@ -84,7 +86,14 @@
                         @endif
                       </td>
 
-                     
+                      <td>@if ($order->payment_mode==0)
+                        <p class="py-0 my-0"><span class="badge bg-success text-light">Offline</span></p> 
+
+
+                        @else   
+                        <a><span class="badge bg-success text-light">Online</span></a> 
+
+                    @endif</td>
 
                     <td>
                         {{ Carbon\Carbon::parse($order->created_at)->format('d M Y') }}

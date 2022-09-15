@@ -61,7 +61,7 @@
     <tr>
         <td colspan="3">
 
-            <button class="btn btn-primary w-100 py-0 my-1 make_bill" data-total="{{$total}}" data-bill_table={{$room->id}} type="submit"   data-toggle="modal" data-target="#exampleModal"><i class="fa fa-arrow-right " ></i> Make Bill </button>
+            <button class="btn btn-primary w-100 py-0 my-1 make_bill"  data-bill_table={{$room->id}} id="submit_form"><i class="fa fa-arrow-right " ></i> Make Bill </button>
         </td>
     </tr>
 </table>
@@ -73,39 +73,6 @@
 
 </div>
 <script>
-
-    
-    $('#paid_amount').keyup(function(){
- amount();
-
-    })
-    $('#discount_amount').keyup(function(){
- amount();
-
-    })
-
-    function amount(){
-        $('#exchange_amount').val('')
-    $paid=$('#paid_amount').val();
-    $clean=$paid.trim();
-    if ($clean.length>=1) {
-    $total=$('#total').val();
-    $discount=$('#discount_amount').val();
-
-    if($discount.trim()==''){
-          $discount=0;
-    }
-    $discount_type=$('#discount_type').val();
-    $damount=($total*$discount)/100;
-
-    if ($discount_type==1) {
-        $damount=parseInt($discount);
-    }
-    $refund=$paid-$total+$damount;
-
-    $('#exchange_amount').val($refund)
-}
-    }
 
   
   $(document).on('click','.make_bill',function(){

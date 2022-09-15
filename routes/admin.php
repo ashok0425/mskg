@@ -50,15 +50,16 @@ Route::get('carts/delete/{id}','MenuController@destroy')->name('carts.delete');
 Route::get('add_to_cart/{id}/{qty}/{room_id}','CartController@store');
 Route::get('cart/delete/{id}','CartController@destroy');
 
-Route::get('order/add/{ex}/{paid}/{discount?}/{room_id}/{discount_type}','OrderController@store');
+Route::get('order/add/{room_id}','OrderController@store');
 Route::get('cart/print/{room_id}/','CartController@print');
 Route::get('cart/print_update/{room_id}/','CartController@updateIsprint');
 Route::get('verify_security/{security_code}','CartController@verify_security');
 
 
-
 Route::resource('orders','OrderController');
 Route::get('today/orders','OrderController@today')->name('orders.today');
+Route::get('order/edit/{ex?}/{paid?}/{discount?}/{order_id?}/{discount_type?}/{payment_type?}','OrderController@updateOrderStatus')->name('orders.edit');
+
 Route::get('chart/orders','OrderController@chart')->name('orders.chart');
 Route::get('orders/status/{id}','OrderController@status')->name('orders.status');
 Route::get('/itemsell/order','OrderController@itemsell')->name('orders.itemsell');
