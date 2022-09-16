@@ -10,14 +10,14 @@
 
 <div class="row" >
       
-    <?php $i=1 ;
-    $total=0;
-    ?>
+   
 
     @foreach($rooms as $room)
     
     @if (count($room->cart)>0)
-
+    <?php 
+    $total=0;
+    ?>
     <div class="col-md-6">
  
 <div class="card shadow-sm">

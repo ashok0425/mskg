@@ -176,8 +176,7 @@
         })
   
         $(document).on('click', '#submit_form', function() {
-            // room_id = $(this).data('bill_table')
-            alert(room_id)
+            room_id = $(this).data('bill_table')
                 $.ajax({
                     type: 'get',
                     url: "{{ url('admin/order/add/') }}/" +room_id,
