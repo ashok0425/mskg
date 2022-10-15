@@ -12,7 +12,7 @@
 	box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
 	padding: 2mm;
 	margin: 0 auto;
-	width: 57mm;
+	width: 80mm;
 	background: #FFF;
   text-align: center;
 }
@@ -33,7 +33,7 @@
 }
 
 #invoice-POS h2 {
-	font-size: .9em;
+	font-size: .9rem;
 }
 
 #invoice-POS h3 {
@@ -43,7 +43,6 @@
 }
 
 #invoice-POS p {
-	font-size: .7em;
 	color: #666;
 	line-height: 1.2em;
 }
@@ -135,6 +134,9 @@
     font-family: Arial, Helvetica, sans-serif!important;
     font-weight: 700!important;
     color: #000!important;
+  }
+  .itemtext{
+font-size: .8rem!important;
   }
 </style>
 </head>
