@@ -38,9 +38,9 @@
                 @foreach ($orders as $order) 
                 @php
                     $total=$total+$order->actual_amount;
-                    $paid=$total+$order->paid;
-                    $exchange=$total+$order->exchange;
-                    $discount=$total+$order->discount;
+                    $paid=$paid+$order->paid;
+                    $exchange=$exchange+$order->exchange;
+                    $discount=$discount+$order->discount;
 
                 @endphp 
                 <tr>
@@ -112,7 +112,11 @@
                     <td>{{$total}}</td>
                     <td>{{$paid}}</td>
                     <td>{{$exchange}}</td>
-                    <td colspan="4">{{$discount}}</td>
+                    <td>{{$discount}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
                 </tr>
             </tfoot>
         </table>
